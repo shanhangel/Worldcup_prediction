@@ -1,5 +1,5 @@
-## ===============================By Casper===================================
-## =============================Just for fun==================================
+## ===============================By Casper====================================
+## =============================Just for fun===================================
 
 ## 基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种
 ## 多样，但是基本可分为以足球评论员为代表的基于足球知识预测，以及以章鱼哥为代表
@@ -10,6 +10,7 @@
 
 ## 先上预测结果图
 
+## ============================================================================
 
 ## 1. Getting the data
 ## 数据来源为FIFA官网，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文
@@ -34,6 +35,8 @@ web_2010 <- htmlTreeParse(Url_2010, useInternal=TRUE)
 
 
 ## 插入html图片
+
+## ============================================================================
 
 ## 2. Clean the data
 
@@ -95,13 +98,16 @@ eliresult_2010 <- data.frame(home_team=home_team, away_team=away_team,
 ## 组合小组赛和淘汰赛数据，以team作为index
 final_result_2010 <- merge(eliresult_2010, gpresult_2010_2, by.x="home_team", 
                       by.y="Team", sort=TRUE)                                                             
-final_result_2010 <- merge(final_result_2010, gpresult_2010_2, by.x="home_team", 
-                      by.y="Team", sort=TRUE)
-final_result_2010 <- final_result_2010[,-3]
-final_result_2010[17] <- "2010"
-colnames(final_result_2010) <- c("Home", "Away", "Result", "Played", "Won_Home",
-                                 "Draw_Home", "Lost_Home", "Goals_For_Home",
-                                 "Goals_Against_Home", "Point_Home","Won_Away",
+final_result_2010 <- merge(final_result_2010, gpresult_2010_2, by.x="away_team", 
+                      by.y="Team", sort=FALSE)
+final_result_2010 <- data.frame(final_result_2010[,2], final_result_2010[,1],
+                                final_result_2010[,4:18])
+
+final_result_2010[18] <- "2010"
+colnames(final_result_2010) <- c("Home", "Away", "Result", "Played_Home", 
+                                 "Won_Home", "Draw_Home", "Lost_Home", 
+                                 "Goals_For_Home", "Goals_Against_Home", 
+                                 "Point_Home","Played_Away", "Won_Away",
                                  "Draw_Away", "Lost_Away", "Goals_For_Away",
                                  "Goals_Against_Away", "Point_Away", "Year")
 write.csv(final_result_2010,"./worldcup_prediction/test.csv")
@@ -169,17 +175,19 @@ create_train_data <- function(Url){
     
     final_result <- merge(eliresult, gpresult_2, by.x="home_team", 
                                by.y="Team", sort=TRUE)                                                             
-    final_result <- merge(final_result, gpresult_2, by.x="home_team", 
-                               by.y="Team", sort=TRUE)
-    final_result <- final_result[,-3]
+    final_result <- merge(final_result, gpresult_2, by.x="away_team", 
+                               by.y="Team", sort=FALSE)
+    final_result <- data.frame(final_result[,2], final_result[,1],
+                               final_result[,4:18])
     
-    final_result[17] <- year
-    colnames(final_result) <- c("Home", "Away", "Result", "Played", "Won_Home", 
-                                "Draw_Home", "Lost_Home", "Goals_For_Home", 
-                                "Goals_Against_Home", "Point_Home",
-                                "Won_Away", "Draw_Away", "Lost_Away", 
-                                "Goals_For_Away", "Goals_Against_Away", 
-                                "Point_Away", "Year")
+    final_result[18] <- year
+    
+    colnames(final_result) <- c("Home", "Away", "Result", "Played_Home", 
+                                "Won_Home", "Draw_Home", "Lost_Home", 
+                                "Goals_For_Home", "Goals_Against_Home", 
+                                "Point_Home", "Played_Away", "Won_Away", 
+                                "Draw_Away", "Lost_Away", "Goals_For_Away", 
+                                "Goals_Against_Away", "Point_Away", "Year")
     filename=paste("training","_", year, sep="")
     write.csv(final_result, paste("./worldcup_prediction/",filename,".csv",
                                   sep=""))
@@ -205,34 +213,87 @@ training <- rbind(training_1986, training_1990, training_1994, training_1998,
 write.csv(training, "./worldcup_prediction/training.csv")
 
 
+## ============================================================================
 
 ## 3. Data Analysis
+
+test <- read.csv("./worldcup_prediction/test.csv")
+
+train_data <- data.frame(Result=as.factor(training$Result), 
+                         Played_Home=as.numeric(training$Played_Home),
+                         Won_Home=as.numeric(training$Won_Home),
+                         Draw_Home=as.numeric(training$Draw_Home),
+                         Lost_Home=as.numeric(training$Lost_Home),
+                         Goals_For_Home=as.numeric(training$Goals_For_Home),
+                         Goals_Against_Home=as.numeric(training$Goals_Against_Home),
+                         Point_Home=as.numeric(training$Point_Home),
+                         Played_Away=as.numeric(training$Played_Away),
+                         Won_Away=as.numeric(training$Won_Away),
+                         Draw_Away=as.numeric(training$Draw_Away),
+                         Lost_Away=as.numeric(training$Lost_Away),
+                         Goals_For_Away=as.numeric(training$Goals_For_Away),
+                         Goals_Against_Away=as.numeric(training$Goals_Against_Away),
+                         Point_Away=as.numeric(training$Point_Away))
+
+
 ## SVD
 
-svd1 <- svd(training[,5:12])
-par(mfrow = c(1, 2))
+par(mfrow=c(1,1))
+svd1 <- svd(train_data[,c(3,4,6,7,10,11,13,14)])
 plot(svd1$d, xlab = "Column", ylab = "Singular value", pch = 19)
-plot(svd1$d^2/sum(svd1$d^2), xlab = "Column", ylab = "Prop. of variance explained",
-     pch = 19)
 
+## 可以看出各个因素中的共线性非常严重，分析原因如下，每队的出场数是一定的，胜负
+## 平三场的总数是一定的，胜负结果确定以后积分也是一定的，因此，需要排除出场数
+## "Played",负场数"Lost_Home"和"Lost_Away"，以及小组积分"Point_Home"和
+## "Point_Away"
 
+## 用train_data建立prediction model，用test进行模型筛选
+## Try Logistic Regression Model
+fit_LR <- glm(Result ~ Goals_For_Home + Goals_Against_Home + Goals_For_Away +
+                  Goals_Against_Away, data=train_data, family= "binomial")
 
+prediction_LR <- predict(fit_LR, test)
+prediction_LR[prediction_LR<0.5] <- 0
+prediction_LR[prediction_LR>=0.5] <- 1
 
-
-
+## Try Decision Tree Model
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
 library(rpart)
 
+fit_DT <- rpart(Result ~ Goals_For_Home + Goals_Against_Home + Goals_For_Away 
+                + Goals_Against_Away, data=train_data, method="class")
+
+prediction_DT <- predict(fit_DT, test, type="class")
 
 
+fancyRpartPlot(fit_DT)
+
+dev.copy(pdf, file="fit_DT.pdf")
+dev.off()
+
+## Try Random Forest Model
+library(randomForest)
+fit_RF <- randomForest(as.factor(Result) ~ Goals_For_Home + Goals_Against_Home
+                       + Goals_For_Away + Goals_Against_Away, data=train_data, 
+                       importance=TRUE, ntree=100)
+prediction_RF <- predict(fit_RF, test)
 
 
-fit <- rpart(Result ~ Won_Home + Draw_Home + Goals_For_Home + Goals_Against_Home
-             + Won_Away + Draw_Away + Goals_For_Away + Goals_Against_Away, data=
-            training, method="class")
+## Try Artificial Nerual Network Model
+
+library(neuralnet)
+fit_NN <- neuralnet(Result ~ Goals_For_Home + Goals_Against_Home + 
+                    Goals_For_Away + Goals_Against_Away, train_data)
+prediction_NN <- predict(fit_NN, test)
 
 
-fit <- randomForest(as.factor(Result) ~ Won_Home + Draw_Home + Goals_For_Home + 
-                    Goals_Against_Home + Won_Away + Draw_Away + Goals_For_Away +
-                    Goals_Against_Away, data=training, importance=TRUE, 
-                    ntree=2000)
+## 检查不同模型的预测效果
+model_check <- data.frame(test$Result, prediction_LR, prediction_DT, 
+                          prediction_RF)
+print(fit_NN)
+plot(fit_NN)
+
+
 
