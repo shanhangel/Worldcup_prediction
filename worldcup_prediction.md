@@ -4,12 +4,7 @@
 
 *Just for fun*
 
-基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样
-，但是基本可分为以足球评论员为代表的基于足球知识预测，以及以章鱼哥为代表的随机性
-预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队
-比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世杯的数据作为
-validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的
-March Machine Learning Mania比赛对NCAA结果的预测
+基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，但是基本可分为以足球评论员为代表的基于足球知识预测，以及以章鱼哥为代表的随机性预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测
 
 
 先上预测结果图
@@ -18,9 +13,7 @@ March Machine Learning Mania比赛对NCAA结果的预测
 
 
 ## 1. Getting the data
-数据来源为FIFA官网，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，
-获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、积分信息，再结合淘汰赛的
-胜负结果，生成表格
+数据来源为FIFA官网，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、积分信息，再结合淘汰赛的胜负结果，生成表格
 
 ![fifa_web](fifa_web截图.png)
 
@@ -81,8 +74,7 @@ result <- xpathSApply(web_2010, "// td[@class='c ']", xmlValue)[49:64]
 ```
 
 
-根据比分解析胜负结果，括号里面是点球结果，PSO表示点球大战。判定：如果没有点球决
-胜，每项的第一个元素为胜负依据，如果有点球决胜，第三个元素作为依据
+根据比分解析胜负结果，括号里面是点球结果，PSO表示点球大战。判定：如果没有点球决胜，每项的第一个元素为胜负依据，如果有点球决胜，第三个元素作为依据
 
 ```r
 result1 <- as.character(result)
@@ -137,8 +129,7 @@ write.csv(final_result_2010,"./test.csv")
 
 
 ### 2.2 以1966-2006年世界杯结果为training dataset
-进行过程中发现一些问题，1998-2010年世界杯的参赛队伍为32支，比赛为64场，其中淘汰
-赛为第49-64场；1982-1994年参赛队伍为24支，比赛为52场，其中淘汰赛为第37-52场；1966-1978年参赛队伍为16支，比赛为38场，发现严重问题，78年以前小组赛分为两轮，第一轮晋级的，进入第二轮小组赛，继续比赛争出现，因此无法利用小组赛信息作为淘汰赛的预测因素，因此training data只采用1982-2006年的数据。 %>_<%
+进行过程中发现一些问题，1998-2010年世界杯的参赛队伍为32支，比赛为64场，其中淘汰赛为第49-64场；1982-1994年参赛队伍为24支，比赛为52场，其中淘汰赛为第37-52场；196-1978年参赛队伍为16支，比赛为38场，发现严重问题，78年以前小组赛分为两轮，第一轮晋级的，进入第二轮小组赛，继续比赛争出现，因此无法利用小组赛信息作为淘汰赛的预测因素，因此training data只采用1982-2006年的数据。 %>_<%
 
 建立function，以处理testing data的方法，建立training dataset
 
@@ -305,12 +296,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
@@ -344,7 +335,7 @@ kable(model_check, format = "markdown")
 ## |           1|             1|1             |1             |
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
-## |           1|             0|0             |0             |
+## |           1|             0|0             |1             |
 ## |           1|             1|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           0|             0|1             |0             |
@@ -363,8 +354,6 @@ kable(model_check, format = "markdown")
 
 
 ## 5. Future Work
-本文利用了世界杯历史数据作为training data，以小组赛表现为Predictor，以淘汰赛结果为Output，从Logistic Regression, Decision Tree和Random Forest三种模型中筛选了对test data结果最好的Logistic Regression用在今年世界杯的小组赛数据上作为淘汰赛的预测。
+本文利用了世界杯历史数据作为training data，以小组赛表现为Predictor，以淘汰赛结果为Octput，从Logistic Regression, Decision Tree和Random Forest三种模型中筛选了对test data结果最好的Logistic Regression用在今年世界杯的小组赛数据上作为淘汰赛的预测。
 
-但是本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历
-史比赛量比较小，以后可以再增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training，其次，
-Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等。
+但是本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛量比较小，以后可以再增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training，其次，Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等。
