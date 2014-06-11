@@ -1,8 +1,8 @@
 世界杯结果预测
 ========================================================
-By Casper
+## By Casper
 
-Just for fun
+*Just for fun*
 
 基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样
 ，但是基本可分为以足球评论员为代表的基于足球知识预测，以及以章鱼哥为代表的随机性
@@ -268,8 +268,7 @@ plot(svd1$d, xlab = "Column", ylab = "Singular value", pch = 19)
 
 ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
 
-可以看出各个因素中的共线性非常严重，分析原因如下，每队的出场数是一定的，胜负平三
-场的总数是一定的，胜负结果确定以后积分也是一定的，因此，需要排除出场数"Played"，负场数"Lost_Home"和"Lost_Away"，以及小组积分"Point_Home"和"Point_Away"
+可以看出各个因素中的共线性非常严重，分析原因如下，每队的出场数是一定的，胜负平三场的总数是一定的，胜负结果确定以后积分也是一定的，因此，需要排除出场数"Played"，负场数"Lost_Home"和"Lost_Away"，以及小组积分"Point_Home"和"Point_Away"
 
 用train_data建立prediction model，用test进行模型筛选
 
@@ -306,12 +305,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:16:26 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:16:26 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:16:26 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:16:26 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:16:26 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:16:26 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:34:08 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
@@ -327,11 +326,37 @@ fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home
 prediction_RF <- predict(fit_RF, test)
 ```
 
-结果比较因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
+### 3.5 结果比较
+因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
 
 ```r
 model_check <- data.frame(test$Result, prediction_LR, prediction_DT, 
                           prediction_RF)
+library(knitr)
+kable(model_check, format = "markdown")
+```
+
+```
+## 
+## 
+## | test.Result| prediction_LR|prediction_DT |prediction_RF |
+## |-----------:|-------------:|:-------------|:-------------|
+## |           1|             1|1             |1             |
+## |           0|             0|1             |1             |
+## |           0|             0|0             |0             |
+## |           1|             0|0             |0             |
+## |           1|             1|1             |1             |
+## |           0|             0|0             |0             |
+## |           0|             0|1             |0             |
+## |           0|             0|0             |1             |
+## |           1|             1|0             |1             |
+## |           1|             0|0             |1             |
+## |           1|             0|1             |0             |
+## |           1|             0|0             |0             |
+## |           1|             1|0             |0             |
+## |           1|             1|1             |1             |
+## |           0|             1|1             |1             |
+## |           0|             0|0             |0             |
 ```
 
 ## 4. Result
