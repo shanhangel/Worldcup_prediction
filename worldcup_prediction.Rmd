@@ -262,6 +262,7 @@ fit_LR <- glm(Result ~ Won_Home + Goals_For_Home
 prediction_LR <- predict(fit_LR, test)
 prediction_LR[prediction_LR<0.5] <- 0
 prediction_LR[prediction_LR>=0.5] <- 1
+summary(fit_LR)
 ```
 
 ### 3.3 Try Decision Tree Model
@@ -280,6 +281,7 @@ prediction_DT <- predict(fit_DT, test, type="class")
 
 
 fancyRpartPlot(fit_DT)
+summary(fit_DT)
 ```
 
 ### 3.4 Try Random Forest Model
@@ -290,17 +292,13 @@ fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
                        importance=TRUE, ntree=100)
 prediction_RF <- predict(fit_RF, test)
+summary(fit_RF)
 ```
 
 ### 3.5 结果比较
 因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
 ```{r}
 model_check <- data.frame(test$Result, prediction_LR, prediction_DT, prediction_RF)
-
-summary(fit_LR)
-summary(fit_DT)
-summary(fit_RF)
-
 
 library(knitr)
 kable(model_check, format = "markdown")

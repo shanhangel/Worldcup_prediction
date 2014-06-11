@@ -274,55 +274,6 @@ fit_LR <- glm(Result ~ Won_Home + Goals_For_Home
 prediction_LR <- predict(fit_LR, test)
 prediction_LR[prediction_LR<0.5] <- 0
 prediction_LR[prediction_LR>=0.5] <- 1
-```
-
-### 3.3 Try Decision Tree Model
-
-```r
-library(rattle)
-library(rpart.plot)
-library(RColorBrewer)
-library(rpart)
-
-fit_DT <- rpart(Result ~ Won_Home + Goals_For_Home 
-                + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
-                + Goals_For_Away + Goals_Against_Away, data=train_data, 
-                method="class")
-
-prediction_DT <- predict(fit_DT, test, type="class")
-
-
-fancyRpartPlot(fit_DT)
-```
-
-```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:12:47 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:12:47 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:12:47 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:12:47 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:12:47 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:12:47 huangshan' in 'mbcsToSbcs': dot substituted for <88>
-```
-
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
-
-### 3.4 Try Random Forest Model
-
-```r
-library(randomForest)
-fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home 
-                       + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
-                       + Goals_For_Away + Goals_Against_Away, data=train_data, 
-                       importance=TRUE, ntree=100)
-prediction_RF <- predict(fit_RF, test)
-```
-
-### 3.5 结果比较
-因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
-
-```r
-model_check <- data.frame(test$Result, prediction_LR, prediction_DT, prediction_RF)
-
 summary(fit_LR)
 ```
 
@@ -360,6 +311,36 @@ summary(fit_LR)
 ## Number of Fisher Scoring iterations: 4
 ```
 
+### 3.3 Try Decision Tree Model
+
+```r
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
+library(rpart)
+
+fit_DT <- rpart(Result ~ Won_Home + Goals_For_Home 
+                + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+                + Goals_For_Away + Goals_Against_Away, data=train_data, 
+                method="class")
+
+prediction_DT <- predict(fit_DT, test, type="class")
+
+
+fancyRpartPlot(fit_DT)
+```
+
+```
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+```
+
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
+
 ```r
 summary(fit_DT)
 ```
@@ -374,7 +355,7 @@ summary(fit_DT)
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
 ## 2 0.02564      3    0.6923  1.000 0.1234
-## 3 0.01000      6    0.6154  1.179 0.1255
+## 3 0.01000      6    0.6154  1.231 0.1256
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -512,7 +493,15 @@ summary(fit_DT)
 ##    probabilities: 0.429 0.571
 ```
 
+### 3.4 Try Random Forest Model
+
 ```r
+library(randomForest)
+fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home 
+                       + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+                       + Goals_For_Away + Goals_Against_Away, data=train_data, 
+                       importance=TRUE, ntree=100)
+prediction_RF <- predict(fit_RF, test)
 summary(fit_RF)
 ```
 
@@ -539,7 +528,12 @@ summary(fit_RF)
 ## terms             3    terms  call
 ```
 
+### 3.5 结果比较
+因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
+
 ```r
+model_check <- data.frame(test$Result, prediction_LR, prediction_DT, prediction_RF)
+
 library(knitr)
 kable(model_check, format = "markdown")
 ```
