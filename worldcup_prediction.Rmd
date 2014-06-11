@@ -295,8 +295,13 @@ prediction_RF <- predict(fit_RF, test)
 ### 3.5 结果比较
 因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
 ```{r}
-model_check <- data.frame(test$Result, prediction_LR, prediction_DT, 
-                          prediction_RF)
+model_check <- data.frame(Result, prediction_LR, prediction_DT, prediction_RF)
+
+summary(fit_LR)
+summary(fit_DT)
+summary(fit_RF)
+
+
 library(knitr)
 kable(model_check, format = "markdown")
 ```
@@ -305,6 +310,6 @@ kable(model_check, format = "markdown")
 
 
 ## 5. Future Work
-本文利用了世界杯历史数据作为training data，以小组赛表现为Predictor，以淘汰赛结果为Octput，从Logistic Regression, Decision Tree和Random Forest三种模型中筛选了对test data结果最好的Logistic Regression用在今年世界杯的小组赛数据上作为淘汰赛的预测。
+本文利用了世界杯历史数据作为training data，以小组赛表现为Predictor，以淘汰赛结果为Output，从Logistic Regression, Decision Tree和Random Forest三种模型中筛选了对test data结果最好的Logistic Regression用在今年世界杯的小组赛数据上作为淘汰赛的预测。
 
 但是本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛量比较小，以后可以再增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training，其次，Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等。

@@ -280,7 +280,23 @@ prediction_LR[prediction_LR>=0.5] <- 1
 
 ```r
 library(rattle)
+```
+
+```
+## Rattle: A free graphical interface for data mining with R.
+## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
+## Type 'rattle()' to shake, rattle, and roll your data.
+```
+
+```r
 library(rpart.plot)
+```
+
+```
+## Loading required package: rpart
+```
+
+```r
 library(RColorBrewer)
 library(rpart)
 
@@ -296,12 +312,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 16:46:42 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:09:50 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:09:50 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:09:50 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:09:50 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:09:50 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:09:50 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
@@ -310,6 +326,14 @@ fancyRpartPlot(fit_DT)
 
 ```r
 library(randomForest)
+```
+
+```
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
 fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home 
                        + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -321,39 +345,243 @@ prediction_RF <- predict(fit_RF, test)
 因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
 
 ```r
-model_check <- data.frame(test$Result, prediction_LR, prediction_DT, 
-                          prediction_RF)
+model_check <- data.frame(Result, prediction_LR, prediction_DT, prediction_RF)
+```
+
+```
+## Error: object 'Result' not found
+```
+
+```r
+summary(fit_LR)
+```
+
+```
+## 
+## Call:
+## glm(formula = Result ~ Won_Home + Goals_For_Home + Goals_Against_Home + 
+##     Point_Home + Won_Away + Draw_Away + Goals_For_Away + Goals_Against_Away, 
+##     family = "binomial", data = train_data)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.952  -1.127   0.681   0.980   1.646  
+## 
+## Coefficients:
+##                    Estimate Std. Error z value Pr(>|z|)  
+## (Intercept)         -0.2239     2.0760   -0.11    0.914  
+## Won_Home            -0.5125     0.5479   -0.94    0.350  
+## Goals_For_Home       0.2816     0.1311    2.15    0.032 *
+## Goals_Against_Home  -0.1412     0.1904   -0.74    0.458  
+## Point_Home           0.0174     0.2264    0.08    0.939  
+## Won_Away             0.4214     0.8685    0.49    0.628  
+## Draw_Away            0.4352     0.5700    0.76    0.445  
+## Goals_For_Away      -0.3758     0.2009   -1.87    0.061 .
+## Goals_Against_Away   0.3069     0.2394    1.28    0.200  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 129.69  on 95  degrees of freedom
+## Residual deviance: 116.74  on 87  degrees of freedom
+## AIC: 134.7
+## 
+## Number of Fisher Scoring iterations: 4
+```
+
+```r
+summary(fit_DT)
+```
+
+```
+## Call:
+## rpart(formula = Result ~ Won_Home + Goals_For_Home + Goals_Against_Home + 
+##     Point_Home + Won_Away + Draw_Away + Goals_For_Away + Goals_Against_Away, 
+##     data = train_data, method = "class")
+##   n= 96 
+## 
+##        CP nsplit rel error xerror   xstd
+## 1 0.10256      0    1.0000 1.0000 0.1234
+## 2 0.02564      3    0.6923 0.8462 0.1193
+## 3 0.01000      6    0.6154 0.8462 0.1193
+## 
+## Variable importance
+##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
+##                 34                 18                 15 
+##         Point_Home           Won_Home Goals_Against_Home 
+##                 12                  9                  7 
+##           Won_Away 
+##                  4 
+## 
+## Node number 1: 96 observations,    complexity param=0.1026
+##   predicted class=1  expected loss=0.4062  P(node) =1
+##     class counts:    39    57
+##    probabilities: 0.406 0.594 
+##   left son=2 (46 obs) right son=3 (50 obs)
+##   Primary splits:
+##       Goals_For_Home     < 5.5  to the left,  improve=2.3560, (0 missing)
+##       Won_Away           < 2.5  to the right, improve=1.4330, (0 missing)
+##       Goals_For_Away     < 4.5  to the right, improve=1.2720, (0 missing)
+##       Goals_Against_Away < 1.5  to the left,  improve=1.1740, (0 missing)
+##       Draw_Away          < 1.5  to the left,  improve=0.8403, (0 missing)
+##   Surrogate splits:
+##       Point_Home         < 4.5  to the left,  agree=0.615, adj=0.196, (0 split)
+##       Goals_Against_Away < 2.5  to the right, agree=0.615, adj=0.196, (0 split)
+##       Goals_Against_Home < 1.5  to the left,  agree=0.594, adj=0.152, (0 split)
+##       Won_Home           < 1.5  to the left,  agree=0.583, adj=0.130, (0 split)
+##       Goals_For_Away     < 2.5  to the left,  agree=0.542, adj=0.043, (0 split)
+## 
+## Node number 2: 46 observations,    complexity param=0.1026
+##   predicted class=0  expected loss=0.4783  P(node) =0.4792
+##     class counts:    24    22
+##    probabilities: 0.522 0.478 
+##   left son=4 (38 obs) right son=5 (8 obs)
+##   Primary splits:
+##       Goals_For_Away     < 2.5  to the right, improve=3.0490, (0 missing)
+##       Goals_For_Home     < 3.5  to the right, improve=1.2570, (0 missing)
+##       Goals_Against_Home < 1.5  to the right, improve=1.0700, (0 missing)
+##       Point_Home         < 4.5  to the right, improve=0.7228, (0 missing)
+##       Goals_Against_Away < 3.5  to the right, improve=0.2727, (0 missing)
+##   Surrogate splits:
+##       Won_Away           < 0.5  to the right, agree=0.870, adj=0.250, (0 split)
+##       Goals_Against_Home < 0.5  to the right, agree=0.848, adj=0.125, (0 split)
+## 
+## Node number 3: 50 observations,    complexity param=0.02564
+##   predicted class=1  expected loss=0.3  P(node) =0.5208
+##     class counts:    15    35
+##    probabilities: 0.300 0.700 
+##   left son=6 (30 obs) right son=7 (20 obs)
+##   Primary splits:
+##       Goals_Against_Away < 2.5  to the left,  improve=2.6670, (0 missing)
+##       Won_Away           < 1.5  to the right, improve=1.1970, (0 missing)
+##       Goals_For_Home     < 9.5  to the left,  improve=1.0000, (0 missing)
+##       Draw_Away          < 1.5  to the left,  improve=0.7505, (0 missing)
+##       Goals_For_Away     < 6.5  to the right, improve=0.2691, (0 missing)
+##   Surrogate splits:
+##       Goals_For_Home < 10.5 to the left,  agree=0.68, adj=0.20, (0 split)
+##       Goals_For_Away < 4.5  to the left,  agree=0.64, adj=0.10, (0 split)
+##       Won_Away       < 0.5  to the right, agree=0.62, adj=0.05, (0 split)
+## 
+## Node number 4: 38 observations,    complexity param=0.1026
+##   predicted class=0  expected loss=0.3947  P(node) =0.3958
+##     class counts:    23    15
+##    probabilities: 0.605 0.395 
+##   left son=8 (28 obs) right son=9 (10 obs)
+##   Primary splits:
+##       Goals_For_Home     < 3.5  to the right, improve=2.5290, (0 missing)
+##       Point_Home         < 4.5  to the right, improve=1.8080, (0 missing)
+##       Goals_For_Away     < 4.5  to the right, improve=0.9521, (0 missing)
+##       Goals_Against_Home < 1.5  to the right, improve=0.7579, (0 missing)
+##       Won_Home           < 1.5  to the right, improve=0.3887, (0 missing)
+##   Surrogate splits:
+##       Point_Home < 4.5  to the right, agree=0.921, adj=0.7, (0 split)
+##       Won_Home   < 1.5  to the right, agree=0.895, adj=0.6, (0 split)
+## 
+## Node number 5: 8 observations
+##   predicted class=1  expected loss=0.125  P(node) =0.08333
+##     class counts:     1     7
+##    probabilities: 0.125 0.875 
+## 
+## Node number 6: 30 observations,    complexity param=0.02564
+##   predicted class=1  expected loss=0.4333  P(node) =0.3125
+##     class counts:    13    17
+##    probabilities: 0.433 0.567 
+##   left son=12 (21 obs) right son=13 (9 obs)
+##   Primary splits:
+##       Goals_For_Home     < 8.5  to the left,  improve=1.1460, (0 missing)
+##       Draw_Away          < 1.5  to the left,  improve=0.7333, (0 missing)
+##       Point_Home         < 5.5  to the right, improve=0.5333, (0 missing)
+##       Won_Away           < 1.5  to the right, improve=0.3048, (0 missing)
+##       Goals_Against_Away < 1.5  to the left,  improve=0.2333, (0 missing)
+## 
+## Node number 7: 20 observations
+##   predicted class=1  expected loss=0.1  P(node) =0.2083
+##     class counts:     2    18
+##    probabilities: 0.100 0.900 
+## 
+## Node number 8: 28 observations
+##   predicted class=0  expected loss=0.2857  P(node) =0.2917
+##     class counts:    20     8
+##    probabilities: 0.714 0.286 
+## 
+## Node number 9: 10 observations
+##   predicted class=1  expected loss=0.3  P(node) =0.1042
+##     class counts:     3     7
+##    probabilities: 0.300 0.700 
+## 
+## Node number 12: 21 observations,    complexity param=0.02564
+##   predicted class=0  expected loss=0.4762  P(node) =0.2188
+##     class counts:    11    10
+##    probabilities: 0.524 0.476 
+##   left son=24 (7 obs) right son=25 (14 obs)
+##   Primary splits:
+##       Goals_Against_Home < 2.5  to the right, improve=0.7619, (0 missing)
+##       Goals_For_Home     < 6.5  to the left,  improve=0.2216, (0 missing)
+##       Goals_Against_Away < 1.5  to the left,  improve=0.2216, (0 missing)
+##       Goals_For_Away     < 4.5  to the left,  improve=0.1984, (0 missing)
+##       Won_Home           < 2.5  to the left,  improve=0.1905, (0 missing)
+##   Surrogate splits:
+##       Goals_For_Home < 6.5  to the left,  agree=0.762, adj=0.286, (0 split)
+##       Point_Home     < 4.5  to the left,  agree=0.762, adj=0.286, (0 split)
+##       Goals_For_Away < 5.5  to the right, agree=0.762, adj=0.286, (0 split)
+## 
+## Node number 13: 9 observations
+##   predicted class=1  expected loss=0.2222  P(node) =0.09375
+##     class counts:     2     7
+##    probabilities: 0.222 0.778 
+## 
+## Node number 24: 7 observations
+##   predicted class=0  expected loss=0.2857  P(node) =0.07292
+##     class counts:     5     2
+##    probabilities: 0.714 0.286 
+## 
+## Node number 25: 14 observations
+##   predicted class=1  expected loss=0.4286  P(node) =0.1458
+##     class counts:     6     8
+##    probabilities: 0.429 0.571
+```
+
+```r
+summary(fit_RF)
+```
+
+```
+##                 Length Class  Mode     
+## call              5    -none- call     
+## type              1    -none- character
+## predicted        96    factor numeric  
+## err.rate        300    -none- numeric  
+## confusion         6    -none- numeric  
+## votes           192    matrix numeric  
+## oob.times        96    -none- numeric  
+## classes           2    -none- character
+## importance       32    -none- numeric  
+## importanceSD     24    -none- numeric  
+## localImportance   0    -none- NULL     
+## proximity         0    -none- NULL     
+## ntree             1    -none- numeric  
+## mtry              1    -none- numeric  
+## forest           14    -none- list     
+## y                96    factor numeric  
+## test              0    -none- NULL     
+## inbag             0    -none- NULL     
+## terms             3    terms  call
+```
+
+```r
 library(knitr)
 kable(model_check, format = "markdown")
 ```
 
 ```
-## 
-## 
-## | test.Result| prediction_LR|prediction_DT |prediction_RF |
-## |-----------:|-------------:|:-------------|:-------------|
-## |           1|             1|1             |1             |
-## |           0|             0|1             |1             |
-## |           0|             0|0             |0             |
-## |           1|             0|0             |1             |
-## |           1|             1|1             |1             |
-## |           0|             0|0             |0             |
-## |           0|             0|1             |0             |
-## |           0|             0|0             |1             |
-## |           1|             1|0             |1             |
-## |           1|             0|0             |1             |
-## |           1|             0|1             |0             |
-## |           1|             0|0             |0             |
-## |           1|             1|0             |0             |
-## |           1|             1|1             |1             |
-## |           0|             1|1             |1             |
-## |           0|             0|0             |0             |
+## Error: object 'model_check' not found
 ```
 
 ## 4. Result
 
 
 ## 5. Future Work
-本文利用了世界杯历史数据作为training data，以小组赛表现为Predictor，以淘汰赛结果为Octput，从Logistic Regression, Decision Tree和Random Forest三种模型中筛选了对test data结果最好的Logistic Regression用在今年世界杯的小组赛数据上作为淘汰赛的预测。
+本文利用了世界杯历史数据作为training data，以小组赛表现为Predictor，以淘汰赛结果为Output，从Logistic Regression, Decision Tree和Random Forest三种模型中筛选了对test data结果最好的Logistic Regression用在今年世界杯的小组赛数据上作为淘汰赛的预测。
 
 但是本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛量比较小，以后可以再增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training，其次，Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等。
