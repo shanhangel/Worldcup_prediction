@@ -295,7 +295,7 @@ prediction_RF <- predict(fit_RF, test)
 ### 3.5 结果比较
 因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
 ```{r}
-model_check <- data.frame(Result, prediction_LR, prediction_DT, prediction_RF)
+model_check <- data.frame(test$Result, prediction_LR, prediction_DT, prediction_RF)
 
 summary(fit_LR)
 summary(fit_DT)
