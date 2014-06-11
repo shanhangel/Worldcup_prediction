@@ -315,7 +315,23 @@ summary(fit_LR)
 
 ```r
 library(rattle)
+```
+
+```
+## Rattle: A free graphical interface for data mining with R.
+## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
+## Type 'rattle()' to shake, rattle, and roll your data.
+```
+
+```r
 library(rpart.plot)
+```
+
+```
+## Loading required package: rpart
+```
+
+```r
 library(RColorBrewer)
 library(rpart)
 
@@ -331,12 +347,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:15:14 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:30:42 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:30:42 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:30:42 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:30:42 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:30:42 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-11 17:30:42 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
@@ -353,9 +369,9 @@ summary(fit_DT)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
-## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.000 0.1234
-## 3 0.01000      6    0.6154  1.231 0.1256
+## 1 0.10256      0    1.0000 1.0000 0.1234
+## 2 0.02564      3    0.6923 0.9744 0.1229
+## 3 0.01000      6    0.6154 1.1026 0.1249
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -497,6 +513,14 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
+```
+
+```
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
 fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home 
                        + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -529,7 +553,7 @@ summary(fit_RF)
 ```
 
 ### 3.5 结果比较
-因为training data量比较小，为了避免出现overfit，我们采用Logistic Regression Model
+因为training data量比较小，为了避免出现overfit，在这里采用Logistic Regression Model
 
 ```r
 model_check <- data.frame(test$Result, prediction_LR, prediction_DT, prediction_RF)
