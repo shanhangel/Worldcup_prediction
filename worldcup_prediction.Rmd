@@ -121,6 +121,10 @@ colnames(final_result_2010) <- c("Home", "Away", "Result", "Played_Home",
 write.csv(final_result_2010,"./test.csv")
 ```
 
+```{r}
+library(knitr)
+kable(final_result_2010, format = "markdown")
+```
 
 ### 2.2 以1966-2006年世界杯结果为training dataset
 进行过程中发现一些问题，1998-2010年世界杯的参赛队伍为32支，比赛为64场，其中淘汰赛为第49-64场；1982-1994年参赛队伍为24支，比赛为52场，其中淘汰赛为第37-52场；196-1978年参赛队伍为16支，比赛为38场，发现严重问题，78年以前小组赛分为两轮，第一轮晋级的，进入第二轮小组赛，继续比赛争出现，因此无法利用小组赛信息作为淘汰赛的预测因素，因此training data只采用1982-2006年的数据。 %>_<%

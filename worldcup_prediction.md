@@ -128,6 +128,34 @@ write.csv(final_result_2010,"./test.csv")
 ```
 
 
+```r
+library(knitr)
+kable(final_result_2010, format = "markdown")
+```
+
+```
+## 
+## 
+## |Home        |Away           | Result|Played_Home |Won_Home |Draw_Home |Lost_Home |Goals_For_Home |Goals_Against_Home |Point_Home |Played_Away |Won_Away |Draw_Away |Lost_Away |Goals_For_Away |Goals_Against_Away |Point_Away |Year |
+## |:-----------|:--------------|------:|:-----------|:--------|:---------|:---------|:--------------|:------------------|:----------|:-----------|:--------|:---------|:---------|:--------------|:------------------|:----------|:----|
+## |Argentina   |Mexico         |      1|3           |3        |0         |0         |7              |1                  |9          |3           |1        |1         |1         |3              |2                  |4          |2010 |
+## |Argentina   |Germany        |      0|3           |3        |0         |0         |7              |1                  |9          |3           |2        |0         |1         |5              |1                  |6          |2010 |
+## |Uruguay     |Germany        |      0|3           |2        |1         |0         |4              |0                  |7          |3           |2        |0         |1         |5              |1                  |6          |2010 |
+## |Brazil      |Chile          |      1|3           |2        |1         |0         |5              |2                  |7          |3           |2        |0         |1         |3              |2                  |6          |2010 |
+## |Germany     |England        |      1|3           |2        |0         |1         |5              |1                  |6          |3           |1        |2         |0         |2              |1                  |5          |2010 |
+## |Germany     |Spain          |      0|3           |2        |0         |1         |5              |1                  |6          |3           |2        |0         |1         |4              |2                  |6          |2010 |
+## |Paraguay    |Spain          |      0|3           |1        |2         |0         |3              |1                  |5          |3           |2        |0         |1         |4              |2                  |6          |2010 |
+## |Netherlands |Spain          |      0|3           |3        |0         |0         |5              |1                  |9          |3           |2        |0         |1         |4              |2                  |6          |2010 |
+## |Netherlands |Slovakia       |      1|3           |3        |0         |0         |5              |1                  |9          |3           |1        |1         |1         |4              |5                  |4          |2010 |
+## |Netherlands |Brazil         |      1|3           |3        |0         |0         |5              |1                  |9          |3           |2        |1         |0         |5              |2                  |7          |2010 |
+## |Paraguay    |Japan          |      1|3           |1        |2         |0         |3              |1                  |5          |3           |2        |0         |1         |4              |2                  |6          |2010 |
+## |Spain       |Portugal       |      1|3           |2        |0         |1         |4              |2                  |6          |3           |1        |2         |0         |7              |0                  |5          |2010 |
+## |Uruguay     |Korea Republic |      1|3           |2        |1         |0         |4              |0                  |7          |3           |1        |1         |1         |5              |6                  |4          |2010 |
+## |Uruguay     |Ghana          |      1|3           |2        |1         |0         |4              |0                  |7          |3           |1        |1         |1         |2              |2                  |4          |2010 |
+## |USA         |Ghana          |      0|3           |1        |2         |0         |4              |3                  |5          |3           |1        |1         |1         |2              |2                  |4          |2010 |
+## |Uruguay     |Netherlands    |      0|3           |2        |1         |0         |4              |0                  |7          |3           |3        |0         |0         |5              |1                  |9          |2010 |
+```
+
 ### 2.2 以1966-2006年世界杯结果为training dataset
 进行过程中发现一些问题，1998-2010年世界杯的参赛队伍为32支，比赛为64场，其中淘汰赛为第49-64场；1982-1994年参赛队伍为24支，比赛为52场，其中淘汰赛为第37-52场；196-1978年参赛队伍为16支，比赛为38场，发现严重问题，78年以前小组赛分为两轮，第一轮晋级的，进入第二轮小组赛，继续比赛争出现，因此无法利用小组赛信息作为淘汰赛的预测因素，因此training data只采用1982-2006年的数据。 %>_<%
 
@@ -257,7 +285,7 @@ svd1 <- svd(train_data[,c(3,4,6,7,10,11,13,14)])
 plot(svd1$d, xlab = "Column", ylab = "Singular value", pch = 19)
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11.png) 
 
 可以看出各个因素中的共线性非常严重，分析原因如下，每队的出场数是一定的，胜负平三场的总数是一定的，胜负结果确定以后积分也是一定的，因此，需要排除出场数"Played"，负场数"Lost_Home"和"Lost_Away"，以及小组积分"Point_Home"和"Point_Away"
 
@@ -315,23 +343,7 @@ summary(fit_LR)
 
 ```r
 library(rattle)
-```
-
-```
-## Rattle: A free graphical interface for data mining with R.
-## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
-## Type 'rattle()' to shake, rattle, and roll your data.
-```
-
-```r
 library(rpart.plot)
-```
-
-```
-## Loading required package: rpart
-```
-
-```r
 library(RColorBrewer)
 library(rpart)
 
@@ -347,15 +359,15 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:17:33 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:17:33 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:17:33 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:17:33 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:17:33 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:17:33 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
 
 ```r
 summary(fit_DT)
@@ -369,9 +381,9 @@ summary(fit_DT)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
-## 1 0.10256      0    1.0000 1.0000 0.1234
-## 2 0.02564      3    0.6923 0.9231 0.1216
-## 3 0.01000      6    0.6154 0.9487 0.1223
+## 1 0.10256      0    1.0000  1.000 0.1234
+## 2 0.02564      3    0.6923  1.256 0.1256
+## 3 0.01000      6    0.6154  1.128 0.1252
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -513,14 +525,6 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
-```
-
-```
-## randomForest 4.6-7
-## Type rfNews() to see new features/changes/bug fixes.
-```
-
-```r
 fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home 
                        + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -578,7 +582,7 @@ kable(model_check, format = "markdown")
 ## |           1|             1|0             |1             |
 ## |           1|             0|0             |1             |
 ## |           1|             0|1             |0             |
-## |           1|             0|0             |1             |
+## |           1|             0|0             |0             |
 ## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
 ## |           0|             1|1             |1             |
