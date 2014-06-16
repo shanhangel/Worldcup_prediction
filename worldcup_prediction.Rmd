@@ -305,6 +305,31 @@ kable(model_check, format = "markdown")
 ```
 
 ## 4. Result
+### 4.1 获取2014年世界杯的小组赛数据
+```{r}
+Url_2014 <- "http://www.fifa.com/worldcup/groups/index.html"
+web_2014 <- htmlTreeParse(Url_2014, useInternal=TRUE)
+team <- xpathSApply(web_2014, "//span[@class='t-nText']", xmlValue)
+index <- seq(1,64,by=2)
+team_1 <- team[index]
+played <- xpathSApply(web_2014, "//td[@class='tbl-matchplayed']", xmlValue)
+win <- xpathSApply(web_2014, "//td[@class='tbl-win']", xmlValue)
+draw <- xpathSApply(web_2014, "//td[@class='tbl-draw']", xmlValue)
+lost <- xpathSApply(web_2014, "//td[@class='tbl-lost']", xmlValue)
+goal_for <- xpathSApply(web_2014, "//td[@class='tbl-goalfor']", xmlValue)
+goal_against <- xpathSApply(web_2014, "//td[@class='tbl-goalagainst']", xmlValue)
+score <- xpathSApply(web_2014, "//td[@class='tbl-pts']", xmlValue)
+result_2014 <- data.frame(Team=team_1, Played=played, Win=win, Draw=draw, 
+                          Lost=lost, Goal_for=goal_for, 
+                          Goal_against=goal_against, Score=score)
+```
+
+### 4.2组合淘汰赛对阵和小组赛结果
+
+
+### 4.3 Prediction
+
+
 
 
 ## 5. Future Work
