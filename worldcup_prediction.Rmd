@@ -304,7 +304,6 @@ summary(fit_RF)
 ```{r}
 model_check <- data.frame(test$Result, prediction_LR, prediction_DT, prediction_RF)
 
-library(knitr)
 kable(model_check, format = "markdown")
 ```
 
@@ -328,7 +327,7 @@ result_2014 <- data.frame(Team=team_1, Played=played, Win=win, Draw=draw,
                           Goal_against=goal_against, Score=score)
 ```
 
-### 4.2组合淘汰赛对阵和小组赛结果
+### 4.2 组合淘汰赛对阵和小组赛结果
 
 
 ### 4.3 Prediction

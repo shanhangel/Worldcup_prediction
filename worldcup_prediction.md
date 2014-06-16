@@ -343,7 +343,23 @@ summary(fit_LR)
 
 ```r
 library(rattle)
+```
+
+```
+## Rattle: A free graphical interface for data mining with R.
+## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
+## Type 'rattle()' to shake, rattle, and roll your data.
+```
+
+```r
 library(rpart.plot)
+```
+
+```
+## Loading required package: rpart
+```
+
+```r
 library(RColorBrewer)
 library(rpart)
 
@@ -359,12 +375,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 09:22:07 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 15:59:34 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 15:59:34 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 15:59:34 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 15:59:34 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 15:59:34 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-16 15:59:34 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,8 +398,8 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.256 0.1256
-## 3 0.01000      6    0.6154  1.128 0.1252
+## 2 0.02564      3    0.6923  1.103 0.1249
+## 3 0.01000      6    0.6154  1.231 0.1256
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -525,6 +541,14 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
+```
+
+```
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
 fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home 
                        + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -562,7 +586,6 @@ summary(fit_RF)
 ```r
 model_check <- data.frame(test$Result, prediction_LR, prediction_DT, prediction_RF)
 
-library(knitr)
 kable(model_check, format = "markdown")
 ```
 
@@ -610,7 +633,7 @@ result_2014 <- data.frame(Team=team_1, Played=played, Win=win, Draw=draw,
                           Goal_against=goal_against, Score=score)
 ```
 
-### 4.2组合淘汰赛对阵和小组赛结果
+### 4.2 组合淘汰赛对阵和小组赛结果
 
 
 ### 4.3 Prediction
