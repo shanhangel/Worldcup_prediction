@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -381,9 +381,9 @@ summary(fit_DT)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
-## 1 0.10256      0    1.0000 1.0000 0.1234
-## 2 0.02564      3    0.6923 0.9744 0.1229
-## 3 0.01000      6    0.6154 1.0769 0.1246
+## 1 0.10256      0    1.0000  1.000 0.1234
+## 2 0.02564      3    0.6923  1.026 0.1239
+## 3 0.01000      6    0.6154  1.103 0.1249
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -570,21 +570,21 @@ kable(model_check, format = "markdown")
 ## 
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
-## |           1|             1|1             |1             |
+## |           1|             1|1             |0             |
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|1             |0             |
 ## |           0|             0|0             |1             |
-## |           0|             0|1             |1             |
+## |           0|             0|1             |0             |
 ## |           0|             0|0             |1             |
 ## |           1|             0|0             |1             |
-## |           1|             0|0             |0             |
-## |           1|             0|1             |1             |
+## |           1|             0|0             |1             |
+## |           1|             0|1             |0             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
-## |           0|             1|1             |0             |
+## |           0|             1|1             |1             |
 ## |           0|             0|0             |0             |
 ```
 
@@ -787,6 +787,7 @@ Final <- c(as.character(semi_final[1,index_3[1]]),
            as.character(semi_final[2,index_3[2]]))
 ```
 
+�ھ�
 
 ```r
 if (final$Result[1]==1){
@@ -797,7 +798,10 @@ if (final$Result[1]==1){
 
 
 Champion <- as.character(champion)
+```
 
+
+```r
 Round_of_16
 ```
 

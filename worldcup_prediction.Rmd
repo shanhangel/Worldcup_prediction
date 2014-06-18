@@ -500,6 +500,7 @@ Final <- c(as.character(semi_final[1,index_3[1]]),
            as.character(semi_final[2,index_3[2]]))
 ```
 
+¹Ú¾ü
 ```{r}
 if (final$Result[1]==1){
     champion=final[1,1]
@@ -509,7 +510,9 @@ if (final$Result[1]==1){
 
 
 Champion <- as.character(champion)
+```
 
+```{r}
 Round_of_16
 Quarter_Final
 Semi_Final
