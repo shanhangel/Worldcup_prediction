@@ -4,16 +4,16 @@
 
 *Just for fun*
 
-基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测,还有以高盛为代表的以数据分析预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测
+基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测，还有以高盛为代表的以数据分析预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测。
 
 
-先上预测结果图(Jun.18 Prediction)
+先上预测结果图(Jun.18)
 
 ![final_result](final_prediction.png)
 
 
 ## 1. Getting the data
-数据来源为FIFA官网，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、积分信息，再结合淘汰赛的胜负结果，生成表格
+数据来源为FIFA官网，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、以及积分信息，再结合淘汰赛的胜负结果，生成表格
 
 ![fifa_web](fifa_web截图.png)
 
@@ -74,7 +74,7 @@ result <- xpathSApply(web_2010, "// td[@class='c ']", xmlValue)[49:64]
 ```
 
 
-根据比分解析胜负结果，括号里面是点球结果，PSO表示点球大战。判定：如果没有点球决胜，每项的第一个元素为胜负依据，如果有点球决胜，第三个元素作为依据。以两队比分大小判定胜利结果，1表示主队赢，0表示客队赢。（主队、客队只是表示队伍组合的顺序,跟主客场无关）
+根据比分解析胜负结果，括号里面是点球结果，PSO表示点球大战。判定：如果没有点球决胜，每项的第一个元素为胜负依据，如果有点球决胜，第三个元素作为依据。以两队比分大小判定胜利结果，1表示主队赢，0表示客队赢。（主队、客队只是表示队伍组合的顺序，跟主客场无关）
 
 ```r
 result1 <- as.character(result)
@@ -104,7 +104,7 @@ eliresult_2010 <- data.frame(home_team=home_team, away_team=away_team,
                              result=result,result3=as.numeric(result3))
 ```
 
-组合小组赛和淘汰赛数据，以team作为index
+组合小组赛和淘汰赛数据，以team作为index，得到如下表格：
 
 ![数据组合](数据组合.png)
 
@@ -287,9 +287,9 @@ plot(svd1$d, xlab = "Column", ylab = "Singular value", pch = 19)
 
 ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11.png) 
 
-可以看出各个因素中的共线性非常严重，分析原因如下，每队的出场数是一定的，胜负平三场的总数是一定的，胜负结果确定以后积分也是一定的，因此，需要排除出场数"Played"，负场数"Lost_Home"和"Lost_Away"，以及小组积分"Point_Home"和"Point_Away"
+可以看出各个因素中的共线性非常严重，分析原因如下，每队的出场数是一定的，胜负平三场的总数是一定的，胜负结果确定以后积分也是一定的，因此，需要排除出场数"Played_Home"和"Played_Away"，负场数"Lost_Home"和"Lost_Away"，以及小组积分:"Point_Home"和"Point_Away"
 
-用train_data建立prediction model，用test进行模型筛选
+用training data建立prediction model，用test data进行模型筛选
 
 ### 3.2 Try Logistic Regression Model
 
@@ -343,23 +343,7 @@ summary(fit_LR)
 
 ```r
 library(rattle)
-```
-
-```
-## Rattle: A free graphical interface for data mining with R.
-## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
-## Type 'rattle()' to shake, rattle, and roll your data.
-```
-
-```r
 library(rpart.plot)
-```
-
-```
-## Loading required package: rpart
-```
-
-```r
 library(RColorBrewer)
 library(rpart)
 
@@ -375,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -398,8 +382,8 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.333 0.1252
-## 3 0.01000      6    0.6154  1.154 0.1254
+## 2 0.02564      3    0.6923  1.103 0.1249
+## 3 0.01000      6    0.6154  1.051 0.1243
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -541,14 +525,6 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
-```
-
-```
-## randomForest 4.6-7
-## Type rfNews() to see new features/changes/bug fixes.
-```
-
-```r
 fit_RF <- randomForest(Result ~ Won_Home + Draw_Home + Goals_For_Home 
                        + Goals_Against_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -594,19 +570,19 @@ kable(model_check, format = "markdown")
 ## 
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
-## |           1|             1|1             |0             |
-## |           0|             0|1             |1             |
+## |           1|             1|1             |1             |
+## |           0|             0|1             |0             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|1             |0             |
 ## |           0|             0|0             |1             |
-## |           0|             0|1             |1             |
+## |           0|             0|1             |0             |
 ## |           0|             0|0             |1             |
-## |           1|             0|0             |1             |
 ## |           1|             0|0             |0             |
-## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
-## |           1|             1|0             |1             |
+## |           1|             0|1             |0             |
+## |           1|             0|0             |0             |
+## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
 ## |           0|             1|1             |1             |
 ## |           0|             0|0             |0             |
@@ -752,7 +728,7 @@ prediction_final_2[prediction_final_2>=0.5] <- 1
 semi_final[,"Result"] <- as.factor(prediction_final_2)
 ```
 
-决赛！
+决赛结果
 
 ```r
 index_3 <- NA
@@ -811,7 +787,7 @@ Final <- c(as.character(semi_final[1,index_3[1]]),
            as.character(semi_final[2,index_3[2]]))
 ```
 
-冠军
+冠军！
 
 ```r
 if (final$Result[1]==1){
@@ -823,7 +799,7 @@ if (final$Result[1]==1){
 Champion <- as.character(champion)
 ```
 
-淘汰赛预测结果
+淘汰赛预测结果：
 
 ```r
 Round_of_16
@@ -873,8 +849,8 @@ Champion
 ## 5. Future Work
 本文利用了世界杯历史数据作为training data，以小组赛表现为input，以淘汰赛结果为output，从Logistic Regression, Decision Tree和Random Forest三种模型中筛选了对test data结果最好的Logistic Regression，用在今年世界杯的小组赛数据上作为淘汰赛的预测。预测结果的准确性还有待时间的检验，足球比赛胜负的决定性因素太多，实力接近的两支队伍很有可能球风相克，本文只是提供一种思路。
 
-本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛量比较小，而且在1986年之前的比赛，因为赛制不同，包含两轮小组赛，所以不能作为training data。解决办法：可以增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training。其次，Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等，随着科技发展，比赛中的数据也越来越全面，以后甚至可以加上球员的数据作为参考依据。这些都需要在数据采集的过程中解决。
+本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛总场数比较小，而且在1986年之前的比赛，因为赛制不同，包含两轮小组赛，所以不能作为training data。解决办法：可以增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training。其次，Variables偏少，不多的Variables共线性严重，进球数跟胜场数是有相关关系的，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等，随着科技发展，比赛中的数据也越来越全面，以后甚至可以加上球员的数据作为参考依据。这些都需要在数据采集的过程中解决。
 
-在有了一定量的数据之后，就可以采用一些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率。但是所谓足球是圆的，比赛结果在结束之前是永远不能够确定的，正是因为它的戏剧性和不可预测性，才造就了足球作为第一运动最为独特的魅力。
+在有了一定量的数据之后，就可以采用一些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率。但是所谓足球是圆的，比赛结果在结束之前是永远不能够确定的，正是因为它的戏剧性和不可预测性，才造就了足球作为第一运动最为独特的魅力。放平心态，欣赏足球才是正经事。
 
 
