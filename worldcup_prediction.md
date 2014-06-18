@@ -7,7 +7,7 @@
 基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，但是基本可分为以足球评论员为代表的基于足球知识预测，以及以章鱼哥为代表的随机性预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测
 
 
-先上预测结果图
+先上预测结果图(Jun.18 Prediction)
 
 ![final_result](final_prediction.png)
 
@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:26:25 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -381,9 +381,9 @@ summary(fit_DT)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
-## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.077 0.1246
-## 3 0.01000      6    0.6154  1.128 0.1252
+## 1 0.10256      0    1.0000 1.0000 0.1234
+## 2 0.02564      3    0.6923 0.9744 0.1229
+## 3 0.01000      6    0.6154 1.0769 0.1246
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -570,7 +570,7 @@ kable(model_check, format = "markdown")
 ## 
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
-## |           1|             1|1             |0             |
+## |           1|             1|1             |1             |
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
@@ -584,7 +584,7 @@ kable(model_check, format = "markdown")
 ## |           1|             0|0             |0             |
 ## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
-## |           0|             1|1             |1             |
+## |           0|             1|1             |0             |
 ## |           0|             0|0             |0             |
 ```
 
