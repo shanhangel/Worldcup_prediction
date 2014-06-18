@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,8 +382,8 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.000 0.1234
-## 3 0.01000      6    0.6154  1.103 0.1249
+## 2 0.02564      3    0.6923  1.077 0.1246
+## 3 0.01000      6    0.6154  1.333 0.1252
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -571,14 +571,14 @@ kable(model_check, format = "markdown")
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
 ## |           1|             1|1             |0             |
-## |           0|             0|1             |1             |
+## |           0|             0|1             |0             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|1             |1             |
 ## |           0|             0|0             |1             |
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |1             |
-## |           1|             0|0             |0             |
+## |           1|             0|0             |1             |
 ## |           1|             0|0             |0             |
 ## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
@@ -796,11 +796,10 @@ if (final$Result[1]==1){
     champion=final[1,2]
 }
 
-
 Champion <- as.character(champion)
 ```
 
-
+淘汰赛预测结果
 
 ```r
 Round_of_16
@@ -852,6 +851,6 @@ Champion
 
 本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛量比较小，而且在1986年之前的比赛，因为赛制不同，包含两轮小组赛，所以不能作为training data。解决办法：可以增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training。其次，Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等，随着科技发展，比赛中的数据也越来越全面，以后甚至可以加上球员的数据作为参考依据。这些都需要在数据采集的过程中解决。
 
-在有了一定量的数据之后，就可以采用些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率，但是足球比赛结果在比赛结束之前是永远不能够确定的，正是因为它的戏剧性和扑所迷离，才造就了足球作为第一运动最为独特的魅力。
+在有了一定量的数据之后，就可以采用一些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率。但是所谓足球是圆的，比赛结果在结束之前是永远不能够确定的，正是因为它的戏剧性和不可预测性，才造就了足球作为第一运动最为独特的魅力。
 
 
