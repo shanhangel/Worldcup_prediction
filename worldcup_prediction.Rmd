@@ -9,7 +9,7 @@
 
 先上预测结果图
 
-![title](path/to/your/image)
+![final_result](final_prediction.png)
 
 
 ## 1. Getting the data
@@ -495,6 +495,7 @@ Semi_Final <- c(as.character(final_4[1,index_2[1]]),
                 as.character(final_4[2,index_2[2]]),
                 as.character(final_4[3,index_2[3]]),
                 as.character(final_4[4,index_2[4]]))
+
 Final <- c(as.character(semi_final[1,index_3[1]]),
            as.character(semi_final[2,index_3[2]]))
 ```
@@ -509,11 +510,6 @@ if (final$Result[1]==1){
 
 Champion <- as.character(champion)
 
-Round_of_16
-Quarter_Final
-Semi_Final
-Final
-Champion
 ```
 
 

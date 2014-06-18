@@ -9,7 +9,7 @@
 
 先上预测结果图
 
-![title](path/to/your/image)
+![final_result](final_prediction.png)
 
 
 ## 1. Getting the data
@@ -343,23 +343,7 @@ summary(fit_LR)
 
 ```r
 library(rattle)
-```
-
-```
-## Rattle: A free graphical interface for data mining with R.
-## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
-## Type 'rattle()' to shake, rattle, and roll your data.
-```
-
-```r
 library(rpart.plot)
-```
-
-```
-## Loading required package: rpart
-```
-
-```r
 library(RColorBrewer)
 library(rpart)
 
@@ -375,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -397,9 +381,9 @@ summary(fit_DT)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
-## 1 0.10256      0    1.0000 1.0000 0.1234
-## 2 0.02564      3    0.6923 0.9744 0.1229
-## 3 0.01000      6    0.6154 1.1026 0.1249
+## 1 0.10256      0    1.0000  1.000 0.1234
+## 2 0.02564      3    0.6923  1.026 0.1239
+## 3 0.01000      6    0.6154  1.026 0.1239
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -541,14 +525,6 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
-```
-
-```
-## randomForest 4.6-7
-## Type rfNews() to see new features/changes/bug fixes.
-```
-
-```r
 fit_RF <- randomForest(Result ~ Won_Home + Draw_Home + Goals_For_Home 
                        + Goals_Against_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -595,9 +571,9 @@ kable(model_check, format = "markdown")
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
 ## |           1|             1|1             |0             |
-## |           0|             0|1             |0             |
+## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
-## |           1|             0|0             |1             |
+## |           1|             0|0             |0             |
 ## |           1|             1|1             |0             |
 ## |           0|             0|0             |1             |
 ## |           0|             0|1             |1             |
@@ -806,6 +782,7 @@ Semi_Final <- c(as.character(final_4[1,index_2[1]]),
                 as.character(final_4[2,index_2[2]]),
                 as.character(final_4[3,index_2[3]]),
                 as.character(final_4[4,index_2[4]]))
+
 Final <- c(as.character(semi_final[1,index_3[1]]),
            as.character(semi_final[2,index_3[2]]))
 ```
@@ -820,48 +797,6 @@ if (final$Result[1]==1){
 
 
 Champion <- as.character(champion)
-
-Round_of_16
-```
-
-```
-##  [1] "Brazil"         "Chile"          "Colombia"       "Italy"         
-##  [5] "France"         "Iran"           "Germany"        "Korea Republic"
-##  [9] "Netherlands"    "Mexico"         "Costa Rica"     "C<U+00F4>te d'Ivoire"
-## [13] "Argentina"      "Switzerland"    "Belgium"        "USA"
-```
-
-```r
-Quarter_Final
-```
-
-```
-## [1] "Chile"         "Colombia"      "France"        "Germany"      
-## [5] "Netherlands"   "C<U+00F4>te d'Ivoire" "Switzerland"   "USA"
-```
-
-```r
-Semi_Final
-```
-
-```
-## [1] "Colombia"    "Germany"     "Netherlands" "USA"
-```
-
-```r
-Final
-```
-
-```
-## [1] "Germany"     "Netherlands"
-```
-
-```r
-Champion
-```
-
-```
-## [1] "Netherlands"
 ```
 
 
