@@ -4,7 +4,7 @@
 
 *Just for fun*
 
-基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，但是基本可分为以足球评论员为代表的基于足球知识预测，以及以章鱼哥为代表的随机性预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测
+基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测,还有以高盛为代表的以数据分析预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测
 
 
 先上预测结果图(Jun.18 Prediction)
@@ -74,7 +74,7 @@ result <- xpathSApply(web_2010, "// td[@class='c ']", xmlValue)[49:64]
 ```
 
 
-根据比分解析胜负结果，括号里面是点球结果，PSO表示点球大战。判定：如果没有点球决胜，每项的第一个元素为胜负依据，如果有点球决胜，第三个元素作为依据
+根据比分解析胜负结果，括号里面是点球结果，PSO表示点球大战。判定：如果没有点球决胜，每项的第一个元素为胜负依据，如果有点球决胜，第三个元素作为依据。以两队比分大小判定胜利结果，1表示主队赢，0表示客队赢。（主队、客队只是表示队伍组合的顺序,跟主客场无关）
 
 ```r
 result1 <- as.character(result)
@@ -343,7 +343,23 @@ summary(fit_LR)
 
 ```r
 library(rattle)
+```
+
+```
+## Rattle: A free graphical interface for data mining with R.
+## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
+## Type 'rattle()' to shake, rattle, and roll your data.
+```
+
+```r
 library(rpart.plot)
+```
+
+```
+## Loading required package: rpart
+```
+
+```r
 library(RColorBrewer)
 library(rpart)
 
@@ -359,12 +375,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 16:35:20 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:10:09 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,8 +398,8 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.077 0.1246
-## 3 0.01000      6    0.6154  1.333 0.1252
+## 2 0.02564      3    0.6923  1.333 0.1252
+## 3 0.01000      6    0.6154  1.154 0.1254
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -525,6 +541,14 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
+```
+
+```
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
 fit_RF <- randomForest(Result ~ Won_Home + Draw_Home + Goals_For_Home 
                        + Goals_Against_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -571,10 +595,10 @@ kable(model_check, format = "markdown")
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
 ## |           1|             1|1             |0             |
-## |           0|             0|1             |0             |
+## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
-## |           1|             1|1             |1             |
+## |           1|             1|1             |0             |
 ## |           0|             0|0             |1             |
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |1             |
@@ -582,7 +606,7 @@ kable(model_check, format = "markdown")
 ## |           1|             0|0             |0             |
 ## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
-## |           1|             1|0             |0             |
+## |           1|             1|0             |1             |
 ## |           1|             1|1             |1             |
 ## |           0|             1|1             |1             |
 ## |           0|             0|0             |0             |
@@ -609,7 +633,7 @@ group_2014 <- data.frame(Team=team_1, Win=win, Draw=draw,
 ```
 
 ### 4.2 组合淘汰赛对阵和小组赛结果
-依照淘汰赛对阵规则，可以用先前的到的模型来预测八强赛的结果，分别是 A1 vs B2, C1 vs D2, E1 vs F2, G1 vs H2 etc.
+依照淘汰赛对阵规则，可以用先前得到的模型来预测八强赛的结果，分别是 A1 vs B2, C1 vs D2, E1 vs F2, G1 vs H2 etc.
 
 ```r
 round_2_1 <- data.frame(Home=group_2014$Team[c(1,9,17,25,5,13,21,29)], 
