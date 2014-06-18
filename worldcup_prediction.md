@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-六月-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-六月-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-六月-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-六月-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-六月-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-六月-18 14:19:57 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-六月-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-六月-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-六月-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-六月-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-六月-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-六月-18 14:28:56 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,8 +382,8 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.026 0.1239
-## 3 0.01000      6    0.6154  1.026 0.1239
+## 2 0.02564      3    0.6923  1.077 0.1246
+## 3 0.01000      6    0.6154  1.128 0.1252
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -797,6 +797,48 @@ if (final$Result[1]==1){
 
 
 Champion <- as.character(champion)
+
+Round_of_16
+```
+
+```
+##  [1] "Brazil"         "Chile"          "Colombia"       "Italy"         
+##  [5] "France"         "Iran"           "Germany"        "Korea Republic"
+##  [9] "Netherlands"    "Mexico"         "Costa Rica"     "C<U+00F4>te d'Ivoire"
+## [13] "Argentina"      "Switzerland"    "Belgium"        "USA"
+```
+
+```r
+Quarter_Final
+```
+
+```
+## [1] "Chile"         "Colombia"      "France"        "Germany"      
+## [5] "Netherlands"   "C<U+00F4>te d'Ivoire" "Switzerland"   "USA"
+```
+
+```r
+Semi_Final
+```
+
+```
+## [1] "Colombia"    "Germany"     "Netherlands" "USA"
+```
+
+```r
+Final
+```
+
+```
+## [1] "Germany"     "Netherlands"
+```
+
+```r
+Champion
+```
+
+```
+## [1] "Netherlands"
 ```
 
 

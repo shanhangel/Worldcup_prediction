@@ -510,6 +510,11 @@ if (final$Result[1]==1){
 
 Champion <- as.character(champion)
 
+Round_of_16
+Quarter_Final
+Semi_Final
+Final
+Champion
 ```
 
 
