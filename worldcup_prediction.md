@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-六月-18 16:31:40 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-六月-18 16:32:24 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,7 +382,7 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.026 0.1239
+## 2 0.02564      3    0.6923  1.000 0.1234
 ## 3 0.01000      6    0.6154  1.103 0.1249
 ## 
 ## Variable importance
@@ -574,13 +574,13 @@ kable(model_check, format = "markdown")
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
-## |           1|             1|1             |0             |
+## |           1|             1|1             |1             |
 ## |           0|             0|0             |1             |
-## |           0|             0|1             |0             |
+## |           0|             0|1             |1             |
 ## |           0|             0|0             |1             |
-## |           1|             0|0             |1             |
-## |           1|             0|0             |1             |
-## |           1|             0|1             |0             |
+## |           1|             0|0             |0             |
+## |           1|             0|0             |0             |
+## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
@@ -799,6 +799,7 @@ if (final$Result[1]==1){
 
 Champion <- as.character(champion)
 ```
+
 
 
 ```r
