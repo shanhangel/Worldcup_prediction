@@ -466,8 +466,8 @@ plot(svd1$d, xlab = &quot;Column&quot;, ylab = &quot;Singular value&quot;, pch =
 
 <h3>3.2 Try Logistic Regression Model</h3>
 
-<pre><code class="r">fit_LR &lt;- glm(Result ~ Won_Home + Goals_For_Home 
-              + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+<pre><code class="r">fit_LR &lt;- glm(Result ~ Won_Home + Draw_Home + Goals_For_Home 
+              + Goals_Against_Home + Won_Away + Draw_Away 
               + Goals_For_Away + Goals_Against_Away, data=train_data, 
               family= &quot;binomial&quot;)
 
@@ -479,32 +479,32 @@ summary(fit_LR)
 
 <pre><code>## 
 ## Call:
-## glm(formula = Result ~ Won_Home + Goals_For_Home + Goals_Against_Home + 
-##     Point_Home + Won_Away + Draw_Away + Goals_For_Away + Goals_Against_Away, 
-##     family = &quot;binomial&quot;, data = train_data)
+## glm(formula = Result ~ Won_Home + Draw_Home + Goals_For_Home + 
+##     Goals_Against_Home + Won_Away + Draw_Away + Goals_For_Away + 
+##     Goals_Against_Away, family = &quot;binomial&quot;, data = train_data)
 ## 
 ## Deviance Residuals: 
 ##    Min      1Q  Median      3Q     Max  
-## -1.952  -1.127   0.681   0.980   1.646  
+## -1.977  -1.114   0.679   0.959   1.661  
 ## 
 ## Coefficients:
 ##                    Estimate Std. Error z value Pr(&gt;|z|)  
-## (Intercept)         -0.2239     2.0760   -0.11    0.914  
-## Won_Home            -0.5125     0.5479   -0.94    0.350  
-## Goals_For_Home       0.2816     0.1311    2.15    0.032 *
-## Goals_Against_Home  -0.1412     0.1904   -0.74    0.458  
-## Point_Home           0.0174     0.2264    0.08    0.939  
-## Won_Away             0.4214     0.8685    0.49    0.628  
-## Draw_Away            0.4352     0.5700    0.76    0.445  
-## Goals_For_Away      -0.3758     0.2009   -1.87    0.061 .
-## Goals_Against_Away   0.3069     0.2394    1.28    0.200  
+## (Intercept)           0.296      2.919    0.10     0.92  
+## Won_Home             -0.665      0.851   -0.78     0.44  
+## Draw_Home            -0.163      0.670   -0.24     0.81  
+## Goals_For_Home        0.296      0.137    2.17     0.03 *
+## Goals_Against_Home   -0.172      0.227   -0.76     0.45  
+## Won_Away              0.428      0.860    0.50     0.62  
+## Draw_Away             0.432      0.567    0.76     0.45  
+## Goals_For_Away       -0.376      0.200   -1.88     0.06 .
+## Goals_Against_Away    0.305      0.239    1.27     0.20  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 129.69  on 95  degrees of freedom
-## Residual deviance: 116.74  on 87  degrees of freedom
+## Residual deviance: 116.68  on 87  degrees of freedom
 ## AIC: 134.7
 ## 
 ## Number of Fisher Scoring iterations: 4
@@ -513,12 +513,24 @@ summary(fit_LR)
 <h3>3.3 Try Decision Tree Model</h3>
 
 <pre><code class="r">library(rattle)
-library(rpart.plot)
-library(RColorBrewer)
+</code></pre>
+
+<pre><code>## Rattle: A free graphical interface for data mining with R.
+## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
+## Type &#39;rattle()&#39; to shake, rattle, and roll your data.
+</code></pre>
+
+<pre><code class="r">library(rpart.plot)
+</code></pre>
+
+<pre><code>## Loading required package: rpart
+</code></pre>
+
+<pre><code class="r">library(RColorBrewer)
 library(rpart)
 
-fit_DT &lt;- rpart(Result ~ Won_Home + Goals_For_Home 
-                + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+fit_DT &lt;- rpart(Result ~ Won_Home + Draw_Home + Goals_For_Home 
+                + Goals_Against_Home + Won_Away + Draw_Away 
                 + Goals_For_Away + Goals_Against_Away, data=train_data, 
                 method=&quot;class&quot;)
 
@@ -528,37 +540,37 @@ prediction_DT &lt;- predict(fit_DT, test, type=&quot;class&quot;)
 fancyRpartPlot(fit_DT)
 </code></pre>
 
-<pre><code>## Warning: conversion failure on &#39;Rattle 2014-鍏湀-16 16:45:21 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;e5&gt;
-## Warning: conversion failure on &#39;Rattle 2014-鍏湀-16 16:45:21 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;85&gt;
-## Warning: conversion failure on &#39;Rattle 2014-鍏湀-16 16:45:21 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;ad&gt;
-## Warning: conversion failure on &#39;Rattle 2014-鍏湀-16 16:45:21 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;e6&gt;
-## Warning: conversion failure on &#39;Rattle 2014-鍏湀-16 16:45:21 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;9c&gt;
-## Warning: conversion failure on &#39;Rattle 2014-鍏湀-16 16:45:21 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;88&gt;
+<pre><code>## Warning: conversion failure on &#39;Rattle 2014-鍏湀-18 11:43:09 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;e5&gt;
+## Warning: conversion failure on &#39;Rattle 2014-鍏湀-18 11:43:09 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;85&gt;
+## Warning: conversion failure on &#39;Rattle 2014-鍏湀-18 11:43:09 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;ad&gt;
+## Warning: conversion failure on &#39;Rattle 2014-鍏湀-18 11:43:09 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;e6&gt;
+## Warning: conversion failure on &#39;Rattle 2014-鍏湀-18 11:43:09 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;9c&gt;
+## Warning: conversion failure on &#39;Rattle 2014-鍏湀-18 11:43:09 huangshan&#39; in &#39;mbcsToSbcs&#39;: dot substituted for &lt;88&gt;
 </code></pre>
 
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAC7lBMVEX9/v0AAAAAACIAACsAADEAADMAADUAADkAADoAAD4AAEwAAFYAAFoAAGAAAGUAAGYAJ3kALX8AMVcAMYYANGwAOWUAOY8AOjoAOmYAOpAARpkAUaAAV24AWKoAXYkAZo8AZrUAZrYYAAAYADEYAFYYJ3kYYpkYYrgkAAAkADMkAFokLX8kcqAkcsElAAAlACIlAD4lMT4lMVclem4leoUrAAArADErAFYrfNYsAAAsADUsAGAsMWAsMYYse6ose84tAAAtACstAEwtNEwtNGwtg6U5AAA5ADk5AGU5OWU5OY85j485j9o6AAA6ADo6OgA6Ojo6OpA6ZmY6ZrY6kLY6kNs8JwA8JzE8fHk8ldY/AAA/ADM/AFo/keFBAABBACJBAD5BMQBBMVdBm5tMRgBMrplMrtZQAABQACtQADVQAExQAGBQMQBQNABQnO9Qp8BZLQBZLTNZLVpZkX9ZruFbMQBbMSJbVwBbm1dbuoVbuptcYjFcrplcrtZlAABlADllAGVlOQBlOTllOY9lZgBltf1mAABmADpmAGZmOgBmOpBmZgBmZmZmZrZmkNtmtv9rfFZrlXlrrplrrrhrrtZvMQBvMTVvMWBvnIZvvM5vvO9wNABwNCtwNExwyKVwyMBxUQBxyqBxyuFzVwBz2W5z2ZuIcjOIyqCIyuGKeiKK2W6K2ZuNWACN26qN2++OXQCO6YmO6cCPOQCPOTmPOWWPZgCPtY+P29qP2/2QOgCQOjqQOmaQZpCQkLaQ29uQ2/+ekVqern+eyqCeysGeyuGhmz6huleh2W6h2YWh2ZuqezWqgyuq26qq2++q6Ymq6cC1ZgC124+1/tq1/v22ZgC2Zjq2Zma2kDq2//++vr7GnGDGvIbG26rG287G2+/Hp0zHyGzH6YnH6aXH6cDKysrajzna/v3bkDrbkGbbtmbb/7bb/9vb///e3t7s7Oz39/f9tWX924/9/rX9/tr9/v3/tmb/25D//7b//9v///9V9+UTAAAA+nRSTlP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AP//////F6YBYgAAAAlwSFlzAAALEgAACxIB0t1+/AAAIABJREFUeJztnX2cJEV5xy0UOBG9gBg8FeMmMaDmiMFD8YUsKquJYVHB1YAckhzhFHQPIxAjMdEktyKiA3iHeqCcnJycrHce5uU2Yu6FvZfd9YSEVW/vZbmXxfHl5oaXnd2d/1LPU9Xd1W8z3T3d0z1Vz+8DN7M9Xd31PN966qmumu55zjTJSD0n7wqQ8hGBN1QE3lAReENF4A0VgTdUBN5QEXhDReANFYE3VATeUBF4Q0XgDRWBN1QE3lAReENF4A0VgTdUBN5QEXhDReANFYE3VATeUBF4Q0XgDRWBN1QE3lAReENF4A0VgTdUBF6K2cq7Ju0RgZdidSlWReVdn6xF4KUc8BUQgTdFCL7cxcFPcBF4Y8TBzw68r0TgTRNG/M82E3jTBODnfrSHwJsmAD/75TqBN0CsufKuYnYyFjynOtlc+sI3FXwU6hZ8LadzDAUfgzsnXzl2TDv0ZoKPxX2STU1VjukW9QQ+CvmJqUpFM/JGgg/jvu+t60PA8ws8za7wCLyjveyFweAFeb1CnsDbGjzh6yERr2PIE/gIXb0V8nnXO00R+Ojgj+Vd7zRF4CODnyLwnS4CT+AJvEki8AQ+ogi8FiLwBJ7AmyQCT+AJvElSwB9Y2Q8v7vH8KGOwXrPvzfaqDYHXQkxlDOA963KD2Bj2L+2fHH3xbgKvjxzw+9728X7futyBu1bhZ+fvntz/sVUEXh8xB/E3Arr6/Ut5V99P4PWTDX60OyjH73vLKoh67OpPIPAayQLPYzpwcCfzPB/c/dldBF4jWeBH8W6Z7jDw0Otft57A66Mml3N7+VD+wNfWQ34fPWOSwOsj5rD2gYd3vCeA3L6XMXk1R+D1EM3cEXgCb5IIPIEn8CaJwBN4Am+SVPB4Ibd/KV64yZdB+Fde5xF4naSAxwVZgDx6hvWy7/zdg92Te8+giNdODnixIAsTszzy5QtHPtotl2YJvFbydvVyAdZ5GewedQU8gddDXvAwOc+JyxfI8T+57vtLcfXG4U7gO1+NIx62jnaPdltfwiDw2sgL3p3jJ3E1drDfSfPIncBrIOYGf2BltxjVd8t12FH+Rol4Aq+LPOA91/Gi63dyvOBO4DVQNc7cHSPw2qhaifQkWxU7PQpFB1WPVSYiPLsaNGGLHn6kgaqVibiix53poGqlMhWP+xQ94LCwquevvF0QXQQ+VeXtgujqKPBNfj4kb+p1FXzRf+qkk8AzFuRrx5vtphygyHXNXR0FPtjZxQQf/DmBT6II4OeGeH9a8uxQ826psYC9QDO9ffV6ed7miJjhOGJn613kuuYuvcDPDS04Wh/3ggsAH0Q9DvhxPMD4/D3W3/Jd5LrmLr3A1yxmM70YgGUeiH3IuazGuAQvdpodOL3XKSbBi49q7JJetuAXcAzriCDoVkp12czkFvkucl1zV6eBn72Vh3Qfp8BDrIxEVPBW4M0OdAG/mYs3wybOGYg6PYEAL3eaHbDj1gYvP6qxBUfLrAuOgQfAHWcHGBMl4J1oQvY7V13t7U6jIfANxML+lz//OvP+39yyp17r4m9nb9kjnIn/I3jwdUkEbR/mXuDHwTt0RUbmSMVOANkBzzBZy49qVnchtoj24mQCOIP4y343rVQGt/PCpdkv8LLiJCzUuHZ7uYDgQyV+8Pl//nszDs666hKZN+JrAjz/FHCPI3hkbbN3CPKd3OBFxMuPVPB4Gd7nini7hPPOXVfEPV6qQaa4lCK+icJ9g84s39ZVr6Gzy30ijtQcD0RrdsTDi+jqcX87yTvgfRHvgPdHvCUrx0cA31ef4+20ixcpNQPf5jZRPPDhQmfWeLSB5yERi8zpGdXzD3nP3iXCtDQ7gBFvIVTBy52CwMuPFPBOt47CUT18XLYPXw64nONtk2cjqK5sHhTxSSQi3ncl5ruO77LG4PDXbYBFdPVWbHpH9X7w9qjeBo8H8J66zJhM/WV5Qe+uq18EPolY3UUpCHzeUusaJAIfrkZpsPHKR1MsYtDO5vkmaEI/SAy+WV1j2Z2Figee1BYReENF4A1V8cAXZ/zTXlGOJ7VDBN5QEXhDVTzwlOPbouKBJ7VFBN5QEXhDVTzwlOPbouKBJ7VFBN5QEXhDVSjwRby5sB3Kw+5igbe/qFIF5V2dtikPuwsKvsJ1zBjyedhdOPBw50qdiWeP5F2fdgnsHm+z3UUDP3vr0Z/vQQdo9pSpRuJ2z/243l67iwaeu+DhowaCx7utjAYPN5qZCB5vBzUYPN4GaSD4X22Gu+sMBl/DG17MAz+D9+gbAz7kroPiPisqJRXA7jzBM3YkmhjTaj6HseFoytLuHMFHxS7QV7RBHxW7QJ+V3fmBj8Odk69UNHmYbBzunHxWdncK+CNsQpNJ3Hjgh7OyOzfwwdwPLWWnPRoCfmJKB/Jh3Le+9r4Q8NnYXSzwh+9edmTslWEhr8Wjw0PAb2EnB4MfzsjuYoE/dO3GIwffsTEMvA4/FhAMfvXxnwqJ+OGM7C4W+IMXPnrk0EfvDQ15DSZ14nb1krzm4J84rRn4jv9BoITgU7e7WOCbRnzn/wRYMvDp210s8I1yPIFPVcUCf/juntBRPYFPVcUC3+A6nsCnq4KBbyS9wYeLwBP4FEXg2ywCT+AJPIEn8ATeGPBjjLGTNh45eAFjy1ygYakONp+0UUvwWxguyG27nJ3ygEN5LX7ZbrG6WVfwGxA3TNQefLtrsnaMNwTYPCav7PUCD9fta18+/Mj1i+HFpS2nPKBu1hT84XuQ9hOvtNuA1MF3fmKZmLy/dqOG4CX8bVfc55272fbhG4bVzZqCP7SUWX28a3nm8D3fulvniMd+/eXDW1/3AJJ2b3Vt1hQ89O8i6mGiXunoezDHK3O4uoHfetbxN0C37gGPf6mbNQVv5/lDS1XuvI8H8NAsnjhJ166eo/VHPDA3IeIt8AcvcI3px3B026N+M0M/8MOrF/tz/OqF0CT0z/GA9vA3N3q4Y5bXOuJlZ/7I9Qvdo/pHPglxrm7WETx86YLH9nPvlREu4YvvYmCOfwI/1Q08XssxxnO86zoeNssO3oDr+MjSCHwsEXgCn6IIfJtF4Ak8gSfw5oJXl+I2wGQdbtAdPKzFncyv2M+CBbnh1TCQh+UZk8ArS3EHL3x0Q49YtdEd/GqEDFdwW18Dk3irFw5v8SzVaQ5eXYrjyMd65KKd3uDFZI1gvXoxf1m7UG4yBbxrKQ4jPuC2Cv3Ab7scv3Qhox4j3rs2rzl491Icz/E/vfYHS1mPj7tm4Hn/rkzRQo7/7hXfvpwt9HHXFbx/KW6sZ6zHc/ekhuDtPL/tcgl77cK1Cz3L8zqD9y3F8Uy/YZk7zaP9moLfepYcyW+74r7Vi91pPiu7i/LwI3fEj/Uc8Ua8LuBV8rBC98jf3Wdz5wE/7I14E8DbS3E4vHfneGG/ZuDlCp31zVrx9Qt3js/M7vzAV+M94FAb8NV4DzjUEHwlxiNNJ6Q6/1EoaHdM7Fo9CoU7oDIRCb1jvg4PP5J2x8Ku1cOPpqvVCrcowjOcJxT7dQBfDLtzfIgxNP2Y0uABh0WxO13w9YIoVaOKb65PEepO4DUw16cIdSfwGpjrU4S6E3gNzPUpQt0JvAbm+hSh7qmDnxviVyIlT0Vq3i01FrCX0EzvgqPxzKzZx4J38GtOqRqVgrnBVvl3g58gS+AHnwMi1D1t8HNDvLrj4PyGJga4xlL59Is3h32Gn/d5Nsz09tXL4ozj8/fgplSNSsHc5lahZge6YpYYLwU6IELd0wZfs5ww04uxV2bwQ3LgibIaGtI1YqfZgdN7bd/NDX1gqAsdOjswfw+84iHEBmDO/1Tc4zoeYohoeFvNlVbB5/Pey9nYu830XtILP7SHe0PvYUd5Uz+I3qYU6IAIdU8bvBVz0Hh5K5zhrZZvQhP7lNAQ9ZQ7gWW2i2Z6S2VwDS/bC//3yUOU8SjSx0y4AX+cUIQHHnl2QHo7VaNSMNeyim8FY9XdFvx2iG8Qe6sR39QPYKzjN7cDItQ9A/Bw9hJUBMyBrDNvM5qo0MVcxOGJndw9HLihBHbXXvrFEkYUHkI6wtVhKIfrEs6SfV6qRqVgrmUV7IZtxdmtDzbIvVVHNPVDWU0wHgdEqHsmEV8TnuB2gEXjaCKy9pCTO6n2iq4M+ri+cle5r7zgqDzE3FDXeFc9OOLVcRC6P1WjUjDXsgp2KwvO4yp4ubfiiOZ+UCPe64AIdU89xwPRmh0CsonLCC17UlJAxANVNGgc2vlLv9hlR0l53nv7xEG8OX52QBn/thd8RHMtq+Tnzm4WeLG34ojmflByvM8BEeqexaieV4hbhFVFa7Bt1+SgRwUvd3L1cPBBGSMGujUcJeEhcAPu4R3Vzw3hB/Ic7e3qI5prWSVzvLObBC/3VhzR3A+o8VKgAyLUPZvr+C5rmAt/3QYVEn2fzcwzqld6OGj+4EZwEI765CHczVoVzgmIc5TFZXy7r+ObmetYVWbzvwRjdGs3tavne49bnXcsP/gdEKHunTNz5xoCNlGqRqVs7njc+SmPovghQt3bDF6kLrWzavaBpTJzDZNbNjwXc+HvcBPT80OEuuf7+/Gk3ETgDRWBN1TZg2cdfvy4and9Ep6PIt5QEXhDReANFeX4tEU5nlRkEXhDReANFeX4tEU5nlRkEXhDReANVabgnZv8szxJhseOqbbY6ztpsmLZgre+GFAgOFmqk+xtE/hjIA2eZtFYnWRv9uBnbz1aZ1NcGjy/ponA3hp8NaoD7M0ePHz9n2X4xKoCdasMb3Poy9Ze30mTFcscfO2Sr7TXETmKwY3O2MMV396swc+8/9clk8DXSnMPE3iGNzxBziu+I9IQgO+Dhxt0gL2Zd/UQAEblePhKvHE5PsLzGts8vZGtOtjeNMEzNhJNjOnwhEpu72Q0cXvzrqtPKYKPil2gP1btdPhRsQv0RbM3PfBxuHPylUpKD2jNqyONw52TT81eXz2SFcsL/AibqFSKPanZRPHATxbN3tTAB3PfeSU79cEQ8BNThfJETIVx3/fW9SHgi2VvtuB33bhkZN0rwkJ+ouDT2Q0VAn4ve2Ew+MmC2Zst+J1X3T+y4/X3h4GfSCMEcsrxweAHT/h6SMRPpmWvryLJimULfsc5D47s/MhndAz5uF190UI+W/DbT20MvoN/XCgR+ALZm2/Ed/DPiSUDXxx788vxaYEvVI7PAXwhc/yuGxeFjuop4nNVbtfxBD5fZQy+kYrliLiKOXFH4FMHX7Ac33bwhczxFPEU8QS+WPYS+IQi8FKU43MCX5gcv+tGdhzO1blnbrYz9nz+946z8UWriD+wsh+W5dzrcqMMNozid+76jYj4NUtwip6Tfr4CHlrBulfw6/olI+vklX2xHBFXTGXcj5fvo2co4Af7rXd7X7zbBPAwS4v8j/u0d66Ww1cn74vliLhywO9728cFZHXu5sBdq+S7/R9bZUSO33HO3wd29Vw84jMAn3eOP3DXN1YK8GrE719qdfH2Vs1z/I6zlyBeH/gdZ/P2gF39cVpF/Gg35vjJfW8+YZUDft9bVomotwNe/4i3YtoX8bCZD+7ecJNO4Pedv/uAjHiHsZLnrQyvPfidfxMKHsZ9yiigWI6IKwu8GLd3ewZ0DvjB7kkzwAPdgK5efhcHmoS1TqtJjheXcxDYasTD3we+tl4Z5Gmd44H1zivldZwDHq/lGI75+OW8tU5brAiIKwQvxvHY1fPIt3M8XtuJv5XGUCx7O3/mLicVZuYuoQh8QhF4KZqrzwl8IXI8RTxFPIE3EzzcNWd91XIN/IsbdAVvL83hMH+QwbXcyn4jwa9jS6xbJvlV/ZpFI9t937LWJ8fbS3N4y+S+83cPdk/uPWOyPeCLleN3/OlfL7Fup+DI1y3adZPvfppiRUBcebt6gC9umeTIR7uViRuTIn7XTf9w4xJr2h4jPuC2imI5Iq684MUiHODHiB/1BbwR4HmE37jEvmWS5/jvXfWdK9kiH/cCOSKu3OCtpTkrx//kuu8vZd0+7gWyNxPwPMZ3OREvWsK6RZ67J9NyRAFyPEjMzVrfxRjtHu32LNZlBb5IOX4drlgtcm6Z5O/WLPGk+YJFQFz5LudwaU6C33/d+sF+T5ovmL1ZPfwIIt65ZXIdf+OJePRDgRwRWwp5Z2lOgh/tnvRGfNHszRK8fcsk9vmeHF80R8SWGvL20pwAz4d38N0rV44vmr3pga/GmrsTfujgHM/t9Xb2jZSevV7lneOnq5UY5KUfCvRokNji9sbmXiB70wQfmTyz/FDwR3s3FNgbFXsB7U0RfLUyEfFpzpYbivQUqNjqcHtTfIhxtTI1EVMd/Jy73Oz1KvccP109FtcTleIEQAJ1tr2NwNeLo7b5I29D6+2ylcAXzub2GNr54NPN8XkbWo8NPoMcn7cHFCUzLoHyNrRelIifG+KXIyVP1WreLTUWsBdoprevXi/DDzPFUZkxWQQODG/b4wxhc3tNruVkaxPwc0MLjtbHvVYEeCHIBRG9UO7zFeqaG5q/B96Oi5d2gm+HyahxOMDsQJdlZHttbQK+Zhkw04utkcci60Ojy2qDl14QO80OnN7rFJNeEB/V2CW9bMEv4BjWEfGYXV6noPftl7bm+HaYLLqVktxbtJIotqZofxPwViuEhsnrN3PxZtjEjYYKO2EhvCB3mh2QhRQvyI9qbMHRMsM2jgcQO3J/4HaGLhanE06YHZC+TmZcArXHZLBLlHAivs22NgcPFSqJFtwnUxJ6wTFVpCdun9gJbHG8wDBzyY9qVuyILU536es4hTPseGiPM6Yl+MxNVjIBP5fV/Ntqa5SIrwkvcOvA9nH0AhpuO8Ixh+/k9oJo/vIj1QtOgPsjXm0JeIj2OGPajviMTXYi3unq22xrsxwP5tXs5g8vot+DapY9ARvY/B0v+Ju/UFCOjwE+9RzfBpOdHF/GBtVKI88mx8OIg9eRd3Ndos2W4FdzeU0te1QvyJ2CvCA/UrzgNHXfqB72Er6Gd+3u6tthMmpcGdy139ZI1/Fd1oAU/roN6ij6vb66ywv2ENfvBXuIa3sBDxByRSR+e1wOpNFT7XHGtHMd3zaTxbb220ozd4WzuT2GtgZejGDZPN9sRegH6TujzXP12Zscs8b5r8eTOkkE3lAReEPVOvhWc2ze5Tv9+JTjSXFE4A0VgTdUlOM7/fiU40lxROANFYE3VJTjO/34lONJcUTgDRWBN1SU48MP7FJWZ6EcXzQxpn47IkPy+YjAh4m5vxfDjnEV57kGLYvAh0mAL3fVy/jtbzY1NVWcZ1a1Lsrxocetw40P7yvN3nr053s4+ImMHk9IOb5gEhH/s831+tzDRzMEn5MIfJgQ/NyP9tRnvwBfnCXwpgjBz365PnsL3uRG4L3KO0dnluOB/MxX4FaXvizBU44vgCI+qTLvaqYhAq+IHYkmHdATeEdRuQP6jp/MoRzvHCg6d06+khZ6yvE5KxZ3Tn6qcqzawVFP4KVicj/CJqYqlQ4mT+ClgsEfWspOezSMfKGeRh1XlOOtwwTBPXz3siNjrwwFX4jn7VOOb02B4A9du/HIwXdsDCVfoF+ciCsCLxUI/uCFjx459NF7G4V83vVOKgIvFQj+idOagO/c2XvK8dZhEkV8AX43j3J8a0qU442OeE0UMqrvCR3VE3g9FPs63njweefoLHN8Q1GO10K5gc9JBF6KwBsqAh9XeedoyvGJRBEvZYMfY4ydxC/fL2BsmQs0rNjA5pM2UsRrJBv8BsQN83UH3+6asxvjDQE2j8kLPAKvhSzwh+9B2k+80m4DUgff+YllYg732o0Efjr/HJ1yjj+0lFl9vGuW/vA937o7k4inHJ+vLPDQv4uoh/lapaPvwRyvTOWZHvGayDWq34CIVe68jwfw0CyeOIm6eo3kBX/wAteYfgxvoelRF+hNB593jk45xwPaw9/c6OGOWT6biKccn68QPKy989h+7r0ywiV8sSSPOf4J/JQiXh/RlK2hIvBxlXeOprn6RKKIl6KIN1QE3lAR+LjKO0dnkePlmqx82QCztHgxlwV4yvH5SgUv12Tly8ELH93QI5brKOL1kwpersk6L2M9crWWwGsnb46XM/L8BSM+4LYK08HnnaOzuY6Xa7L4wnP8T6/9wVLW4+NOOb7z5QYv12TtpdmxnrEez92TaYHPSQReyjOqX6a84M2TG5a50zxyJ/AaiIVz5wF/xBvxBD7vHJ3Wc+4U8HJN1l6axa9YunO84E45XgNV48zdsfTA5yQCb6laYdGfZTshRc/A6XxVj1UmIj692sJu9lOv8s7RqT3LtlqZmogpes6dDuIhH5N8Bwe8duDrxVfeLhIi8G1X3i4S0i3H5001gjK1P7Io4tuuvF0kRODbrrxdJKQh+Lkhfqld8ni75ttSn+ldcNS7zb/bzKXO/n31enne5niYa3Zl4B2UzttFQvrl+LkhznPcyycAfPn0i5tDnB3oigO+3OfZAIVkmfH5+MuFlOMzEUdsoZnpxQArM/jFQABfdvUEc0MfGAKoZTbvvRyJvdtM7yW98BODuDf0Hla/YIMXB64xvt+CX+DPEcpTYaGuulei0WGDDACfk/QDbwUWxCrHNMPDmm9Con1qTzDTWyrzXfnW2YH5e9TdFvx2iG8QewdEvDxwjbcI+IXxcbmvOC1vAridMfEDldga8KSzA7Ld5e0iIS3Bg49LIjb7MLcCJk5UNgmJA4CVkApCc3brEzBxbxd4hllaHrhm9SNii5NLvFmlJjoBu9PP20VC+uV4SRHBc2wAcByJ4ujKZg89r4xd0Qas3azwFXsHRLw8sAreCXB/xKtjSDxEpvZHln4RjwFXsyNeRrQMw7IdjSJ+5++Rnzu7Kf023zsEvD/iZTfiy/GzA8q1QxD4nKQfeAhlPibjALtENHJ4GMoWKQtRCf+ROd7ZTYKXeweAlwdWwDtDd9+ofm4It8vTa9XVF0t1eR3fZQ214a/bwO2iq++zgUBQI0M2/0vz9zi7qV0933vczg6+Ub0NXrlY96qGnX5JXlRgI8jbRUL65fgEGvfP5GSoTO2PLN0ivqmefhfG4ImblL/tPyKV0EPGgScJEXhDpVuOp/IRRRFvqAi8oSLwhopyvKHlKeINFYE3VATeUFGON7Q8RbyhIvCGisAbKsrxhpaniDdUBN5QEXhDRTne0PIU8YaKwBsqAm+oKMcbWp4i3lAReENF4A0V5XhDy1PEGyoCb6gIvKGiHG9oeYp4Q0XgDRWBN1SU4w0tTxFvqAi8oSLwhopyvKHlKeINFYE3VATeUFGON7Q8RbyhIvCGisAbKsrxhpaniDdUBN5QEXhD1RJ4ZqsTyzO3Oq58a/a3Bt76fZ2E5JzyrZ4/SWHm+omg2IfIu/x0a/anA77OjnFVE5fH4m0u7/a7PEQHlZ9uzf6WwZfx15bZ1NRUJRG4Mvy4GxRPWL4GvwuXpDx6DX4VuD57q7RgKjY4KI81SFi+Xu6qj+OPU8YuLw4xOwA/ZpfA/lbBz365/qvNvNoTExNTScDNXDr3oz1YfCIZ+J/DzwEmKQ+FOXJefrxLHiI2OCyPNUhYfuB9pbkfow2xy8tDAIEk9rcc8eP4442JwddKYHZy8LzFdyUHX6/PPXy0dslXkoKD8r8ZYIkbTr3+M/jhylKS8tYhrFbTZvC1PojYFsD3QUfbQsTXk/YYIly+sHnm/b9O5HirvKhBwvJYVKSahOBnrFbbZvDlklPtJODmhjDHJwb/q81JGw52tbfsgZ98nZ8UHJQXNUjacCBTzlzaQsRDos0DPO9qS3A5lzjixdgwMfiZ3nmbE3b1eHbe7Hhvb1kQC5wsL2uQqDzEa9Ly0yJwoPLZg2fRROULWl5RHPCMjUQTY1WugPLD0RRafkU0hZZvtf6T0VRQ+12KAT6q24TrKr5TRzVbmB5QPqLZwvSA8q3WPyJ2gb549rsVHXwcv3HPVSoV95nj2M0t95ePYTe33F++1frH4M7JF87+NoEfYROVimsSMZ7hw/7ysQxf4S/fav1jgZ8snP1JwQf7beeV7NQHQxw3MaWeOczura+9L8RwT/kQA+/4w2tCDPeUb7X+IYD3vXV9CPhi2Z8u+F03LhlZ94qwkOFndnqbEMO3sJODDR/2lg+2+3b2gmDDV3jLt1r/YO572QuDwU8WzP50we+86v6RHa+/P8xxvLdpYvjq4z8V0uKHveUDrbv6eX8V0uJXeMu3Wv9AuoMnfD0k4icLZn+64Hec8+DIzo98JjRkJpoZHt7VScubtfjQrk5a3hh8nPrH7Ool+cLYny747ac2c5w9F5XQcKd8MsOPpVb/ZOALY3+64JtGzFSLhk+1aPhUY/Bx6p8IfHHsTxd8oxzZCeDj1J/AK9p146LQUXEngI9TfwLvCpnQ6+COAB+n/gQ+qqIZHq5ohocrCvgY9Q/BG65i2U/gCTyBJ/AEnsATeAJP4Am847h1+K2uJfyde+Zjx9m4lb88//6G4LcwXJDadjk75QHHyrV42MXq5lDD8Qrmjt9n7DzFTP73C65ZcTMe5rwG4BPX3yF6YGU/LMu51+VGGWwYxaP3NwK/9Syw03rx2s83W8t1je2/81z2O5/12a9uziDiYYp7ZLvtIRBMfO74k8/svHLJyDp5ZRxsOFy3rn358CPXL4YXl7ac8oC6OcxwXIm8842XrbjjDy6zN8LfNwuTb5eWh0d8ovqrjPvx8n30DAX8YL/1bu+LdzcAv+3DNwxvfc0N8sVrP2xeK1t+Q/u/+sHzVtz8Mof7neeeB/arm9MHj7Pba477tBox22H+a80SdfI7vKvj8LddcZ937gKMVjeHGC5WIm8H6652Qv6OV392xZ1vukY2gcbgk9XfRrzvbR8XkNW5mwN3rZLv9n9sVaOufgs069WL5YvX/q2vewB90NR+sFWdu0H733iZujl98HKS0zfJzT0WDTyPabTww65ZfuIuAAAIYklEQVQWD5Gubm7c1amIXRFvx0Eo+GT1dxB/Y6UAr0b8/qVWF29vDbdfWhhgf5SIR/slaC94dXPq4C3HeB0HE9/YVR7XGPzWs46/Abo1j+H4l7q5GfivfvBMZ5ud3BxvhIFPWH+7o+/GHD+5780nrHLA73vLKhH1dsCHg3/k+oXKi7s1RB3jQD5zNXzo6p93mbo5dfDbZQ70OG7nlYtGcHD0hpuaRTy30R/xwDxOxN95rsod8v3tMLq53R7yhIFPWH+L8Pm7D8iIdxgred7K8OHgt12+UHnx2M/T/paTG3b1wREPg7s/+lC2Eb9m0UiA43acvcTy4FX3NwHPk5s/x68GP0TI8faoXh3TOxFwtd0cwsAnrL89sgN1ewZ0DvjB7snG4LeetVh58dgfucfz5niM+jddk2WO3yUDwu046TfoRq11zpDBjTAN+jnXqP6RT94gu79mo3rR4t3c7Yj/6ofsKAgBn7T+Dl+IeAhsNeLh7wNfW68M8kLAh3EX9keOeMhzrlE9jHFe5tqcJnjwlf2NFcdx/J11ebyd2eucAYbjtRxjPMe7ruNhszXgaZjjRGOGf9ULdpH0GHveZa4BXwD4VuqP/TyO47Gr55Fv53i8thN/K40h2H55wW5dt3vt3yK809R+13W8tB/+zvY6PpqKNXNFM3cEnsATeAJP4Ak8gSfwYeDdS1lrYCAMt6HFAI8X63IIvxr+heWZWIbL5airYRQLaxMxwVvD+JDKNwOP43uxIjc5yOBabmV/PPByHS7E+Mb220uTOMAPcUEG4N1LWTvOeXDNIrHKERk83isol+K2vu6B1QvF4kUM8HJy/o5Xf/bqM8WSTTzwoO3hlW8CXtwrKSZw9p2/e7B7cu8Zk7HAb7t8MczKhxnf0H57aRIX6sJckMWyrGspi/+1bpE9LRIJvLhXUE7TcavXLhTzFzHAy+U4bu/NZyqzNnHAQ/sNq3xj8OJeSTlZw5GPdisTN9HAy8npMOMb2m8tTdoLlYEuyCjHO0tZGDQBtyU07eql7djovWvzsSL+5qCAbw4e6hxW+SYRj129XJHDiB/1BXw08GHGR7LfnrYPdEE24NWlLJ4mv3fVd65ki3x+awzempjmae67V3z7crbQZ3ejHC/nqHiC+8c3/e257MwguxuCF1N4wZUPqL8fvLUix3P8T677/lLW7ePerKs/Psz4pvbLpUkrxwe4wFM+JfDepax1i9Yt8tx92By8shS3duHahZ7l6Sbg7eW4Fbyju/lM10pVNPDWKl1Q5SOBF72+WITvHu32LNY1AQ+Duz/+ZJjxzey3liatBZkAF2QC3ruUxf9ds8SdKfG8jcE7S3H83erF7kznK+/h6qw880x/9Xm+HOcr7wNvrdIFVD6o/o3A779u/WC/O803sV9E/RUhxjez316ikuADXOAtnxi86jnfUta6RSPeoPGd2G05AHeW4tbyN55G7y8fFvE3n7kiIOL95T3cbdQBlQ+svw+8tSIHAT/pjfgm9ovv2oQZ38R+Z2lSgg9wQSbgvUtZOMpzp0lx3sbg7aU47PPdaS6gvDfkxXKcGN77cnxAeQ94+4s4/soH198f8dYKHR/ewUiv28e9AXhYhwszvpn9ztKkXK7zu8BfPjH4aqy5L/+Jq7HmroLKr4ihoPKt1n8yhopnf3LwlRiek+dVH8XBy8e221M+tt2e8q3WPzb3ItnfAvgKi/Q0WOiGJqwTVz3loxjdqHwUoxuVb7X+UaAX0/7k4KsVfqQIz06ecKQ+bovK51s+MXhochMx5XrAHpXPt3xy8NXKVMzzuhoclc+3fGLw09Vjsc485X1+MpXPt3xi8HDmSmUqmirw8OQqlS9SeVXxfpqkWq0ei6qgB+VT+XzLK6JfkzZUBN5QEXhDReANFYE3VATeUBF4Q0XgDRWBN1QE3lBpDz7STysbqOKCf/pd8K2CFz1u//3nj4v/PPssn55+5p/Y7/5S7gMvzz603NnHJm99UcEpDXs/+xA7cVPYBjzQk3Y15Ons87gr09CYyHu2SwUGj756UhCdDgT/zD9vmn763ZsAz5Ov4n8/JQE9yQLBe/4Wez+2fPopeQ7fBnGgx6yDydM55yHwWUj4Cv7FQONRDZH3v/xv/lY4/img/djyZz73OO732In/Kcr8xeeXBxzQA17sDWWDNuDZ8UDP/nCT3CBPZ5+Hb/s36AKwjlY9p59+z39Y3dBL/mUTbyRQWbmnZ5c8VXTwPOIx0KxwR8AXiQBH8U+ffs8vMRqtvvqH/yW7euWLaNMhXT0wcHX1ygZxIGxxy5XTTTtd/bsugt5BgrfqKTZCLZ86cRO0I15ZudGzS54qMHjM8dI93H82ePCeHajPPiR8qAB58iJXjrfl7epllEIA/jJwgzgQdO4y6sXppl05XjZGuUXUE5sBryEvJuo1HbhLer5KoAKD5555SsTeY9BdOuAhBGVQPvNPHIQ74vlfwIuXgV6BTXuJs2nrM7m3LOvbIA+EknkeTzcdCt6qJ27kx4H2wtvviZumA3fJ2oMNVWzw00++CFL6cldXr6RlCE+MIWVE8CT25xfJPZj9T3BX/8y/esA7G9QDCfDidNMh4J16KhEPuynZwLVLRo6LpoKDf/ahVwn3vnuTK8eLDClBQP8rkr7vck4N9sCuHpC6unrXBjgQnOrZf398WuHuAQ/t5EkZx1jPaauWJ26C0g54zy55quDgcVTEQ+8ln1/+7EMv+r+HrFG96OlFTC5vcB2vwGbuTdbe9iWCe4M4knUdLzpr63Re8LDHX37ucVlPayM/zu/xiH+MWYeTeyq75Knigk9D6jW8H3zmyhtuI2kNninvrNhnbQL/7EPMuU4soLQGTwoXgTdU/w+XA0uLhbaIwQAAAABJRU5ErkJggg==" alt="plot of chunk unnamed-chunk-13"/> </p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAC61BMVEX9/v0AAAAAACIAACsAADEAADMAADUAADkAADoAAD4AAEwAAFYAAFoAAGAAAGUAAGYAJ3kALX8AMVcAMYYANGwAOWUAOY8AOjoAOmYAOpAARpkAUaAAV24AWKoAXYkAZo8AZrUAZrYYAAAYADEYAFYYJ3kYYpkYYrgkAAAkADMkAFokLX8kcqAkcsElAAAlACIlAD4lMT4lMVclem4leoUrAAArADErAFYrfNYsAAAsADUsAGAsMWAsMYYse6ose84tAAAtACstAEwtNEwtNGwtg6U5AAA5ADk5AGU5OWU5OY85j485j7U5j9o6AAA6ADo6OgA6Ojo6OpA6ZmY6ZrY6kLY6kNs8JwA8JzE8fHk8ldY/AAA/ADM/AFo/keFBAABBACJBAD5BMQBBMVdBm5tMRgBMrplMrtZQAABQACtQADVQAExQAGBQMQBQNABQnO9Qp8BZLQBZLTNZLVpZkX9ZruFbMQBbMSJbVwBbm1dbuoVbuptcYjFcrplcrtZlAABlADllAGVlOQBlOTllZgBltf1mAABmADpmAGZmOgBmOpBmZgBmZmZmZrZmkNtmtv9rfFZrlXlrrplrrrhrrtZvMQBvMTVvMWBvnIZvvM5vvO9wNABwNCtwNExwyKVwyMBxUQBxyqBxyuFzVwBz2W5z2ZuIcjOIyqCIyuGKeiKK2W6K2ZuNWACN26qN2++OXQCO6YmO6cCPOQCPOTmPZgCPtY+P29qP2/2QOgCQOjqQOmaQZpCQkLaQ29uQ2/+ekVqern+eyqCeysGeyuGhmz6huleh2W6h2YWh2ZuqezWqgyuq26qq2++q6Ymq6cC1ZgC124+1/tq1/v22ZgC2Zjq2Zma2kDq2//++vr7GnGDGvIbG26rG287G2+/Hp0zHyGzH6YnH6aXH6cDKysrajzna/v3bkDrbkGbbtmbb/7bb/9vb///e3t7s7Oz39/f9tWX924/9/rX9/tr9/v3/tmb/25D//7b//9v///+RylneAAAA+XRSTlP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8A//////8wdT0HAAAACXBIWXMAAAsSAAALEgHS3X78AAAgAElEQVR4nO2dfZwkRXnHLRQ4Eb34iqdC3CQG1Bwxeii+kMWX1byxvqCrATkkOcIp6B5GIEai0YRVER3AA/Xw5eTk5GS98zAJGzX3wt7L7npCwqq397Lcy+L4cnPDy87uzp+p56nq7uq3me6efpuq5/eBm9meru56nm899VRXTfc8aZZkpJ5UdAVIxYjAGyoCb6gIvKEi8IaKwBsqAm+oCLyhIvCGisAbKgJvqAi8oSLwhorAGyoCb6gIvKEi8IaKwBsqAm+oCLyhIvCGisAbKgJvqAi8oSLwhorAGyoCb6gIvKEi8IaKwBsqAi/FbBVdk3xE4KVYU4rVUUXXJ2sReCkHfA1E4E0Rgq/2cPBTXATeGHHw80PvrBB404QR//MtBN40AfiFH+0l8KYJwM9/sUngDRBrr6KrmJ2MBc+pTreXvvBNBR+FugVfy+kcQ8HH4M7J144f1w69meBjcZ9mMzO147pFPYGPQn5qplbTjLyR4MO473/9xhDw/AJPsys8Au9oH3t6MHhBXq+QJ/C2hk/6akjE6xjyBD5CV2+FfNH1TlMEPjr440XXO00R+MjgZwh8t4vAE3gCb5IIPIGPKAKvhQg8gSfwJonAE3gCb5IU8AdvG4QX93h+nDFYr9n/WnvVhsBrIaYyBvCedblhbAwHVg5Ojz97D4HXRw74/W/48KBvXe7g7Wvws/P2TB/40BoCr4+Yg/hrAV39gZW8qx8k8PrJBj/eG5Tj979uDUQ9dvUnEXiNZIHnMR04uJN5ng/u/vx2Aq+RLPDjeLdMbxh46PWv2kjg9VGby7l9fCh/8CsbIb+Pnz5N4PURc1j7wMM73hNAbt/HmLyaI/B6iGbuCDyBN0kEnsATeJNE4Ak8gTdJKni8kDuwEi/c5Msw/Cuv8wi8TlLA44IsQB4/3XrZf96e4d7pfadTxGsnB7xYkIWJWR758oUjH++VS7MEXit5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" alt="plot of chunk unnamed-chunk-13"/> </p>
 
 <pre><code class="r">summary(fit_DT)
 </code></pre>
 
 <pre><code>## Call:
-## rpart(formula = Result ~ Won_Home + Goals_For_Home + Goals_Against_Home + 
-##     Point_Home + Won_Away + Draw_Away + Goals_For_Away + Goals_Against_Away, 
-##     data = train_data, method = &quot;class&quot;)
+## rpart(formula = Result ~ Won_Home + Draw_Home + Goals_For_Home + 
+##     Goals_Against_Home + Won_Away + Draw_Away + Goals_For_Away + 
+##     Goals_Against_Away, data = train_data, method = &quot;class&quot;)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000 1.0000 0.1234
-## 2 0.02564      3    0.6923 0.9231 0.1216
-## 3 0.01000      6    0.6154 0.9744 0.1229
+## 2 0.02564      3    0.6923 0.9744 0.1229
+## 3 0.01000      6    0.6154 1.1026 0.1249
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
-##                 34                 18                 15 
-##         Point_Home           Won_Home Goals_Against_Home 
-##                 12                  9                  7 
+##                 36                 19                 17 
+##           Won_Home Goals_Against_Home          Draw_Home 
+##                 10                  8                  5 
 ##           Won_Away 
-##                  4 
+##                  5 
 ## 
 ## Node number 1: 96 observations,    complexity param=0.1026
 ##   predicted class=1  expected loss=0.4062  P(node) =1
@@ -572,10 +584,10 @@ fancyRpartPlot(fit_DT)
 ##       Goals_Against_Away &lt; 1.5  to the left,  improve=1.1740, (0 missing)
 ##       Draw_Away          &lt; 1.5  to the left,  improve=0.8403, (0 missing)
 ##   Surrogate splits:
-##       Point_Home         &lt; 4.5  to the left,  agree=0.615, adj=0.196, (0 split)
 ##       Goals_Against_Away &lt; 2.5  to the right, agree=0.615, adj=0.196, (0 split)
 ##       Goals_Against_Home &lt; 1.5  to the left,  agree=0.594, adj=0.152, (0 split)
 ##       Won_Home           &lt; 1.5  to the left,  agree=0.583, adj=0.130, (0 split)
+##       Draw_Home          &lt; 0.5  to the right, agree=0.552, adj=0.065, (0 split)
 ##       Goals_For_Away     &lt; 2.5  to the left,  agree=0.542, adj=0.043, (0 split)
 ## 
 ## Node number 2: 46 observations,    complexity param=0.1026
@@ -587,8 +599,8 @@ fancyRpartPlot(fit_DT)
 ##       Goals_For_Away     &lt; 2.5  to the right, improve=3.0490, (0 missing)
 ##       Goals_For_Home     &lt; 3.5  to the right, improve=1.2570, (0 missing)
 ##       Goals_Against_Home &lt; 1.5  to the right, improve=1.0700, (0 missing)
-##       Point_Home         &lt; 4.5  to the right, improve=0.7228, (0 missing)
 ##       Goals_Against_Away &lt; 3.5  to the right, improve=0.2727, (0 missing)
+##       Draw_Home          &lt; 1.5  to the right, improve=0.2065, (0 missing)
 ##   Surrogate splits:
 ##       Won_Away           &lt; 0.5  to the right, agree=0.870, adj=0.250, (0 split)
 ##       Goals_Against_Home &lt; 0.5  to the right, agree=0.848, adj=0.125, (0 split)
@@ -603,9 +615,10 @@ fancyRpartPlot(fit_DT)
 ##       Won_Away           &lt; 1.5  to the right, improve=1.1970, (0 missing)
 ##       Goals_For_Home     &lt; 9.5  to the left,  improve=1.0000, (0 missing)
 ##       Draw_Away          &lt; 1.5  to the left,  improve=0.7505, (0 missing)
-##       Goals_For_Away     &lt; 6.5  to the right, improve=0.2691, (0 missing)
+##       Draw_Home          &lt; 0.5  to the left,  improve=0.5192, (0 missing)
 ##   Surrogate splits:
 ##       Goals_For_Home &lt; 10.5 to the left,  agree=0.68, adj=0.20, (0 split)
+##       Draw_Home      &lt; 0.5  to the left,  agree=0.64, adj=0.10, (0 split)
 ##       Goals_For_Away &lt; 4.5  to the left,  agree=0.64, adj=0.10, (0 split)
 ##       Won_Away       &lt; 0.5  to the right, agree=0.62, adj=0.05, (0 split)
 ## 
@@ -616,13 +629,13 @@ fancyRpartPlot(fit_DT)
 ##   left son=8 (28 obs) right son=9 (10 obs)
 ##   Primary splits:
 ##       Goals_For_Home     &lt; 3.5  to the right, improve=2.5290, (0 missing)
-##       Point_Home         &lt; 4.5  to the right, improve=1.8080, (0 missing)
 ##       Goals_For_Away     &lt; 4.5  to the right, improve=0.9521, (0 missing)
 ##       Goals_Against_Home &lt; 1.5  to the right, improve=0.7579, (0 missing)
+##       Draw_Home          &lt; 0.5  to the left,  improve=0.7348, (0 missing)
 ##       Won_Home           &lt; 1.5  to the right, improve=0.3887, (0 missing)
 ##   Surrogate splits:
-##       Point_Home &lt; 4.5  to the right, agree=0.921, adj=0.7, (0 split)
-##       Won_Home   &lt; 1.5  to the right, agree=0.895, adj=0.6, (0 split)
+##       Won_Home  &lt; 1.5  to the right, agree=0.895, adj=0.6, (0 split)
+##       Draw_Home &lt; 1.5  to the left,  agree=0.789, adj=0.2, (0 split)
 ## 
 ## Node number 5: 8 observations
 ##   predicted class=1  expected loss=0.125  P(node) =0.08333
@@ -637,7 +650,7 @@ fancyRpartPlot(fit_DT)
 ##   Primary splits:
 ##       Goals_For_Home     &lt; 8.5  to the left,  improve=1.1460, (0 missing)
 ##       Draw_Away          &lt; 1.5  to the left,  improve=0.7333, (0 missing)
-##       Point_Home         &lt; 5.5  to the right, improve=0.5333, (0 missing)
+##       Draw_Home          &lt; 0.5  to the left,  improve=0.4000, (0 missing)
 ##       Won_Away           &lt; 1.5  to the right, improve=0.3048, (0 missing)
 ##       Goals_Against_Away &lt; 1.5  to the left,  improve=0.2333, (0 missing)
 ## 
@@ -669,7 +682,6 @@ fancyRpartPlot(fit_DT)
 ##       Won_Home           &lt; 2.5  to the left,  improve=0.1905, (0 missing)
 ##   Surrogate splits:
 ##       Goals_For_Home &lt; 6.5  to the left,  agree=0.762, adj=0.286, (0 split)
-##       Point_Home     &lt; 4.5  to the left,  agree=0.762, adj=0.286, (0 split)
 ##       Goals_For_Away &lt; 5.5  to the right, agree=0.762, adj=0.286, (0 split)
 ## 
 ## Node number 13: 9 observations
@@ -691,8 +703,14 @@ fancyRpartPlot(fit_DT)
 <h3>3.4 Try Random Forest Model</h3>
 
 <pre><code class="r">library(randomForest)
-fit_RF &lt;- randomForest(Result ~ Won_Home + Goals_For_Home 
-                       + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+</code></pre>
+
+<pre><code>## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+</code></pre>
+
+<pre><code class="r">fit_RF &lt;- randomForest(Result ~ Won_Home + Draw_Home + Goals_For_Home 
+                       + Goals_Against_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
                        importance=TRUE, ntree=100)
 prediction_RF &lt;- predict(fit_RF, test)
@@ -734,17 +752,17 @@ kable(model_check, format = &quot;markdown&quot;)
 ## 
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
-## |           1|             1|1             |1             |
-## |           0|             0|1             |1             |
-## |           0|             0|0             |0             |
-## |           1|             0|0             |1             |
-## |           1|             1|1             |1             |
-## |           0|             0|0             |0             |
+## |           1|             1|1             |0             |
 ## |           0|             0|1             |0             |
-## |           0|             0|0             |1             |
-## |           1|             1|0             |1             |
+## |           0|             0|0             |0             |
 ## |           1|             0|0             |1             |
-## |           1|             0|1             |0             |
+## |           1|             1|1             |0             |
+## |           0|             0|0             |1             |
+## |           0|             0|1             |1             |
+## |           0|             0|0             |1             |
+## |           1|             0|0             |1             |
+## |           1|             0|0             |0             |
+## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
@@ -768,14 +786,225 @@ lost &lt;- xpathSApply(web_2014, &quot;//td[@class=&#39;tbl-lost&#39;]&quot;, xm
 goal_for &lt;- xpathSApply(web_2014, &quot;//td[@class=&#39;tbl-goalfor&#39;]&quot;, xmlValue)
 goal_against &lt;- xpathSApply(web_2014, &quot;//td[@class=&#39;tbl-goalagainst&#39;]&quot;, xmlValue)
 score &lt;- xpathSApply(web_2014, &quot;//td[@class=&#39;tbl-pts&#39;]&quot;, xmlValue)
-result_2014 &lt;- data.frame(Team=team_1, Played=played, Win=win, Draw=draw, 
-                          Lost=lost, Goal_for=goal_for, 
-                          Goal_against=goal_against, Score=score)
+group_2014 &lt;- data.frame(Team=team_1, Win=win, Draw=draw, 
+                         Goal_for=goal_for, Goal_against=goal_against)
 </code></pre>
 
 <h3>4.2 组合淘汰赛对阵和小组赛结果</h3>
 
+<p>依照淘汰赛对阵规则，可以用先前的到的模型来预测八强赛的结果，分别是 A1 vs B2, C1 vs D2, E1 vs F2, G1 vs H2 etc.</p>
+
+<pre><code class="r">round_2_1 &lt;- data.frame(Home=group_2014$Team[c(1,9,17,25,5,13,21,29)], 
+                      Away=group_2014$Team[c(6,14,22,30,2,10,18,26)],
+                      Result=NA)
+round_2_2 &lt;- merge(round_2_1, group_2014, by.x=&quot;Home&quot;, by.y=&quot;Team&quot;, sort=FALSE) 
+round_2 &lt;- merge(round_2_2, group_2014, by.x=&quot;Away&quot;, by.y=&quot;Team&quot;, sort=FALSE)
+
+final_8 &lt;- data.frame(Home=as.character(round_2[,2]), 
+                      Away=as.character(round_2[,1]), Result=round_2[,3],
+                      Won_Home=as.numeric(as.character(round_2[,4])), 
+                      Draw_Home=as.numeric(as.character(round_2[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_2[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_2[,7])),
+                      Won_Away=as.numeric(as.character(round_2[,8])),
+                      Draw_Away=as.numeric(as.character(round_2[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_2[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_2[,11])))
+</code></pre>
+
 <h3>4.3 Prediction</h3>
+
+<p>8强赛结果</p>
+
+<pre><code class="r">prediction_final_8 &lt;- predict(fit_LR, final_8)
+prediction_final_8[prediction_final_8&lt;0.5] &lt;- 0
+prediction_final_8[prediction_final_8&gt;=0.5] &lt;- 1
+final_8[,&quot;Result&quot;] &lt;- as.factor(prediction_final_8)
+</code></pre>
+
+<p>4强赛结果</p>
+
+<pre><code class="r">## 根据胜负结果判定哪些队伍进入4强赛，根据淘汰赛规则A1和B2的胜者对抗C1和D2的胜者
+index_1 &lt;- NA
+for (i in 1:8){
+  if (final_8$Result[i]==1){
+    index_1[i]=1
+}
+else if (final_8$Result[i]==0){
+    index_1[i]=2
+}
+}
+
+Home &lt;- c(as.character(final_8[1,index_1[1]]), 
+          as.character(final_8[3,index_1[3]]),
+          as.character(final_8[5,index_1[5]]),
+          as.character(final_8[7,index_1[7]]))
+
+Away &lt;- c(as.character(final_8[2,index_1[2]]), 
+          as.character(final_8[4,index_1[4]]),
+          as.character(final_8[6,index_1[6]]),
+          as.character(final_8[8,index_1[8]]))
+
+round_3_1 &lt;- data.frame(Home=Home, Away=Away, Result=NA)
+round_3_2 &lt;- merge(round_3_1, group_2014, by.x=&quot;Home&quot;, by.y=&quot;Team&quot;, sort=FALSE) 
+round_3 &lt;- merge(round_3_2, group_2014, by.x=&quot;Away&quot;, by.y=&quot;Team&quot;, sort=FALSE)
+
+final_4 &lt;- data.frame(Home=as.character(round_3[,2]), 
+                      Away=as.character(round_3[,1]), Result=round_3[,3],
+                      Won_Home=as.numeric(as.character(round_3[,4])), 
+                      Draw_Home=as.numeric(as.character(round_3[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_3[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_3[,7])),
+                      Won_Away=as.numeric(as.character(round_3[,8])),
+                      Draw_Away=as.numeric(as.character(round_3[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_3[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_3[,11])))
+
+
+prediction_final_4 &lt;- predict(fit_LR, final_4)
+prediction_final_4[prediction_final_4&lt;0.5] &lt;- 0
+prediction_final_4[prediction_final_4&gt;=0.5] &lt;- 1
+final_4[,&quot;Result&quot;] &lt;- as.factor(prediction_final_4)
+</code></pre>
+
+<p>半决赛结果</p>
+
+<pre><code class="r">## 同理，用上面的方法计算半决赛结果
+index_2 &lt;- NA
+for (i in 1:4){
+  if (final_4$Result[i]==1){
+    index_2[i]=1
+}
+else if (final_4$Result[i]==0){
+    index_2[i]=2
+}
+}
+
+Home &lt;- c(as.character(final_4[1,index_2[1]]), 
+          as.character(final_4[3,index_2[3]]))
+
+Away &lt;- c(as.character(final_4[2,index_2[2]]), 
+          as.character(final_4[4,index_2[4]]))
+
+round_4_1 &lt;- data.frame(Home=Home, Away=Away, Result=NA)
+round_4_2 &lt;- merge(round_4_1, group_2014, by.x=&quot;Home&quot;, by.y=&quot;Team&quot;, sort=FALSE) 
+round_4 &lt;- merge(round_4_2, group_2014, by.x=&quot;Away&quot;, by.y=&quot;Team&quot;, sort=FALSE)
+
+semi_final &lt;- data.frame(Home=as.character(round_4[,2]), 
+                      Away=as.character(round_4[,1]), Result=round_3[,3],
+                      Won_Home=as.numeric(as.character(round_4[,4])), 
+                      Draw_Home=as.numeric(as.character(round_4[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_4[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_4[,7])),
+                      Won_Away=as.numeric(as.character(round_4[,8])),
+                      Draw_Away=as.numeric(as.character(round_4[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_4[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_4[,11])))
+
+
+prediction_final_2 &lt;- predict(fit_LR, semi_final)
+prediction_final_2[prediction_final_2&lt;0.5] &lt;- 0
+prediction_final_2[prediction_final_2&gt;=0.5] &lt;- 1
+semi_final[,&quot;Result&quot;] &lt;- as.factor(prediction_final_2)
+</code></pre>
+
+<p>决赛！</p>
+
+<pre><code class="r">index_3 &lt;- NA
+for (i in 1:2){
+  if (semi_final$Result[i]==1){
+    index_3[i]=1
+}
+else if (semi_final$Result[i]==0){
+    index_3[i]=2
+}
+}
+
+Home &lt;- as.character(semi_final[1,index_3[1]])
+
+Away &lt;- as.character(semi_final[2,index_3[2]])
+
+round_5_1 &lt;- data.frame(Home=Home, Away=Away, Result=NA)
+round_5_2 &lt;- merge(round_5_1, group_2014, by.x=&quot;Home&quot;, by.y=&quot;Team&quot;, sort=FALSE) 
+round_5 &lt;- merge(round_5_2, group_2014, by.x=&quot;Away&quot;, by.y=&quot;Team&quot;, sort=FALSE)
+
+final &lt;- data.frame(Home=as.character(round_5[,2]), 
+                      Away=as.character(round_5[,1]), Result=round_3[,3],
+                      Won_Home=as.numeric(as.character(round_5[,4])), 
+                      Draw_Home=as.numeric(as.character(round_5[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_5[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_5[,7])),
+                      Won_Away=as.numeric(as.character(round_5[,8])),
+                      Draw_Away=as.numeric(as.character(round_5[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_5[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_5[,11])))
+
+
+prediction_final_1 &lt;- predict(fit_LR, final)
+prediction_final_1[prediction_final_1&lt;0.5] &lt;- 0
+prediction_final_1[prediction_final_1&gt;=0.5] &lt;- 1
+final[,&quot;Result&quot;] &lt;- as.factor(prediction_final_1)
+</code></pre>
+
+<pre><code class="r">Round_of_16 &lt;- as.character(group_2014$Team[c(1,6,9,14,17,22,25,30,5,2,13,10,21,18,29,26)])
+Quarter_Final &lt;- c(as.character(final_8[1,index_1[1]]),
+                   as.character(final_8[2,index_1[2]]),
+                   as.character(final_8[3,index_1[3]]),
+                   as.character(final_8[4,index_1[4]]),
+                   as.character(final_8[5,index_1[5]]),
+                   as.character(final_8[6,index_1[6]]),
+                   as.character(final_8[7,index_1[7]]),
+                   as.character(final_8[8,index_1[8]]))
+Semi_Final &lt;- c(as.character(final_4[1,index_2[1]]),
+                as.character(final_4[2,index_2[2]]),
+                as.character(final_4[3,index_2[3]]),
+                as.character(final_4[4,index_2[4]]))
+Final &lt;- c(as.character(semi_final[1,index_3[1]]),
+           as.character(semi_final[2,index_3[2]]))
+</code></pre>
+
+<pre><code class="r">if (final$Result[1]==1){
+    champion=final[1,1]
+} else if (final$Result[1]==0){
+    champion=final[1,2]
+}
+
+
+Champion &lt;- as.character(champion)
+
+Round_of_16
+</code></pre>
+
+<pre><code>##  [1] &quot;Brazil&quot;         &quot;Chile&quot;          &quot;Colombia&quot;       &quot;Italy&quot;         
+##  [5] &quot;France&quot;         &quot;Iran&quot;           &quot;Germany&quot;        &quot;Korea Republic&quot;
+##  [9] &quot;Netherlands&quot;    &quot;Mexico&quot;         &quot;Costa Rica&quot;     &quot;C&lt;U+00F4&gt;te d&#39;Ivoire&quot;
+## [13] &quot;Argentina&quot;      &quot;Switzerland&quot;    &quot;Belgium&quot;        &quot;USA&quot;
+</code></pre>
+
+<pre><code class="r">Quarter_Final
+</code></pre>
+
+<pre><code>## [1] &quot;Chile&quot;         &quot;Colombia&quot;      &quot;France&quot;        &quot;Germany&quot;      
+## [5] &quot;Netherlands&quot;   &quot;C&lt;U+00F4&gt;te d&#39;Ivoire&quot; &quot;Switzerland&quot;   &quot;USA&quot;
+</code></pre>
+
+<pre><code class="r">Semi_Final
+</code></pre>
+
+<pre><code>## [1] &quot;Colombia&quot;    &quot;Germany&quot;     &quot;Netherlands&quot; &quot;USA&quot;
+</code></pre>
+
+<pre><code class="r">Final
+</code></pre>
+
+<pre><code>## [1] &quot;Germany&quot;     &quot;Netherlands&quot;
+</code></pre>
+
+<pre><code class="r">Champion
+</code></pre>
+
+<pre><code>## [1] &quot;Netherlands&quot;
+</code></pre>
 
 <h2>5. Future Work</h2>
 
@@ -783,7 +1012,7 @@ result_2014 &lt;- data.frame(Team=team_1, Played=played, Win=win, Draw=draw,
 
 <p>本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛量比较小，而且在1986年之前的比赛，因为赛制不同，包含两轮小组赛，所以不能作为training data。解决办法：可以增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training。其次，Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等，随着科技发展，比赛中的数据也越来越全面，以后甚至可以加上球员的数据作为参考依据。这些都需要在数据采集的过程中解决。</p>
 
-<p>在有了一定量的数据之后，就可以采用些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率，但是足球比赛的永远是不能够确定的，正是因为它结果的扑所迷离，才造就了第一运动最为独特的魅力。</p>
+<p>在有了一定量的数据之后，就可以采用些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率，但是足球比赛结果在比赛结束之前是永远不能够确定的，正是因为它的戏剧性和扑所迷离，才造就了足球作为第一运动最为独特的魅力。</p>
 
 </body>
 

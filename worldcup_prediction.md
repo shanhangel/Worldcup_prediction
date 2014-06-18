@@ -294,8 +294,8 @@ plot(svd1$d, xlab = "Column", ylab = "Singular value", pch = 19)
 ### 3.2 Try Logistic Regression Model
 
 ```r
-fit_LR <- glm(Result ~ Won_Home + Goals_For_Home 
-              + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+fit_LR <- glm(Result ~ Won_Home + Draw_Home + Goals_For_Home 
+              + Goals_Against_Home + Won_Away + Draw_Away 
               + Goals_For_Away + Goals_Against_Away, data=train_data, 
               family= "binomial")
 
@@ -308,32 +308,32 @@ summary(fit_LR)
 ```
 ## 
 ## Call:
-## glm(formula = Result ~ Won_Home + Goals_For_Home + Goals_Against_Home + 
-##     Point_Home + Won_Away + Draw_Away + Goals_For_Away + Goals_Against_Away, 
-##     family = "binomial", data = train_data)
+## glm(formula = Result ~ Won_Home + Draw_Home + Goals_For_Home + 
+##     Goals_Against_Home + Won_Away + Draw_Away + Goals_For_Away + 
+##     Goals_Against_Away, family = "binomial", data = train_data)
 ## 
 ## Deviance Residuals: 
 ##    Min      1Q  Median      3Q     Max  
-## -1.952  -1.127   0.681   0.980   1.646  
+## -1.977  -1.114   0.679   0.959   1.661  
 ## 
 ## Coefficients:
 ##                    Estimate Std. Error z value Pr(>|z|)  
-## (Intercept)         -0.2239     2.0760   -0.11    0.914  
-## Won_Home            -0.5125     0.5479   -0.94    0.350  
-## Goals_For_Home       0.2816     0.1311    2.15    0.032 *
-## Goals_Against_Home  -0.1412     0.1904   -0.74    0.458  
-## Point_Home           0.0174     0.2264    0.08    0.939  
-## Won_Away             0.4214     0.8685    0.49    0.628  
-## Draw_Away            0.4352     0.5700    0.76    0.445  
-## Goals_For_Away      -0.3758     0.2009   -1.87    0.061 .
-## Goals_Against_Away   0.3069     0.2394    1.28    0.200  
+## (Intercept)           0.296      2.919    0.10     0.92  
+## Won_Home             -0.665      0.851   -0.78     0.44  
+## Draw_Home            -0.163      0.670   -0.24     0.81  
+## Goals_For_Home        0.296      0.137    2.17     0.03 *
+## Goals_Against_Home   -0.172      0.227   -0.76     0.45  
+## Won_Away              0.428      0.860    0.50     0.62  
+## Draw_Away             0.432      0.567    0.76     0.45  
+## Goals_For_Away       -0.376      0.200   -1.88     0.06 .
+## Goals_Against_Away    0.305      0.239    1.27     0.20  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 129.69  on 95  degrees of freedom
-## Residual deviance: 116.74  on 87  degrees of freedom
+## Residual deviance: 116.68  on 87  degrees of freedom
 ## AIC: 134.7
 ## 
 ## Number of Fisher Scoring iterations: 4
@@ -343,12 +343,28 @@ summary(fit_LR)
 
 ```r
 library(rattle)
+```
+
+```
+## Rattle: A free graphical interface for data mining with R.
+## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
+## Type 'rattle()' to shake, rattle, and roll your data.
+```
+
+```r
 library(rpart.plot)
+```
+
+```
+## Loading required package: rpart
+```
+
+```r
 library(RColorBrewer)
 library(rpart)
 
-fit_DT <- rpart(Result ~ Won_Home + Goals_For_Home 
-                + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+fit_DT <- rpart(Result ~ Won_Home + Draw_Home + Goals_For_Home 
+                + Goals_Against_Home + Won_Away + Draw_Away 
                 + Goals_For_Away + Goals_Against_Away, data=train_data, 
                 method="class")
 
@@ -359,12 +375,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 16:45:21 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 16:45:21 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 16:45:21 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 16:45:21 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 16:45:21 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-16 16:45:21 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 11:43:09 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -375,23 +391,23 @@ summary(fit_DT)
 
 ```
 ## Call:
-## rpart(formula = Result ~ Won_Home + Goals_For_Home + Goals_Against_Home + 
-##     Point_Home + Won_Away + Draw_Away + Goals_For_Away + Goals_Against_Away, 
-##     data = train_data, method = "class")
+## rpart(formula = Result ~ Won_Home + Draw_Home + Goals_For_Home + 
+##     Goals_Against_Home + Won_Away + Draw_Away + Goals_For_Away + 
+##     Goals_Against_Away, data = train_data, method = "class")
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000 1.0000 0.1234
-## 2 0.02564      3    0.6923 0.9231 0.1216
-## 3 0.01000      6    0.6154 0.9744 0.1229
+## 2 0.02564      3    0.6923 0.9744 0.1229
+## 3 0.01000      6    0.6154 1.1026 0.1249
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
-##                 34                 18                 15 
-##         Point_Home           Won_Home Goals_Against_Home 
-##                 12                  9                  7 
+##                 36                 19                 17 
+##           Won_Home Goals_Against_Home          Draw_Home 
+##                 10                  8                  5 
 ##           Won_Away 
-##                  4 
+##                  5 
 ## 
 ## Node number 1: 96 observations,    complexity param=0.1026
 ##   predicted class=1  expected loss=0.4062  P(node) =1
@@ -405,10 +421,10 @@ summary(fit_DT)
 ##       Goals_Against_Away < 1.5  to the left,  improve=1.1740, (0 missing)
 ##       Draw_Away          < 1.5  to the left,  improve=0.8403, (0 missing)
 ##   Surrogate splits:
-##       Point_Home         < 4.5  to the left,  agree=0.615, adj=0.196, (0 split)
 ##       Goals_Against_Away < 2.5  to the right, agree=0.615, adj=0.196, (0 split)
 ##       Goals_Against_Home < 1.5  to the left,  agree=0.594, adj=0.152, (0 split)
 ##       Won_Home           < 1.5  to the left,  agree=0.583, adj=0.130, (0 split)
+##       Draw_Home          < 0.5  to the right, agree=0.552, adj=0.065, (0 split)
 ##       Goals_For_Away     < 2.5  to the left,  agree=0.542, adj=0.043, (0 split)
 ## 
 ## Node number 2: 46 observations,    complexity param=0.1026
@@ -420,8 +436,8 @@ summary(fit_DT)
 ##       Goals_For_Away     < 2.5  to the right, improve=3.0490, (0 missing)
 ##       Goals_For_Home     < 3.5  to the right, improve=1.2570, (0 missing)
 ##       Goals_Against_Home < 1.5  to the right, improve=1.0700, (0 missing)
-##       Point_Home         < 4.5  to the right, improve=0.7228, (0 missing)
 ##       Goals_Against_Away < 3.5  to the right, improve=0.2727, (0 missing)
+##       Draw_Home          < 1.5  to the right, improve=0.2065, (0 missing)
 ##   Surrogate splits:
 ##       Won_Away           < 0.5  to the right, agree=0.870, adj=0.250, (0 split)
 ##       Goals_Against_Home < 0.5  to the right, agree=0.848, adj=0.125, (0 split)
@@ -436,9 +452,10 @@ summary(fit_DT)
 ##       Won_Away           < 1.5  to the right, improve=1.1970, (0 missing)
 ##       Goals_For_Home     < 9.5  to the left,  improve=1.0000, (0 missing)
 ##       Draw_Away          < 1.5  to the left,  improve=0.7505, (0 missing)
-##       Goals_For_Away     < 6.5  to the right, improve=0.2691, (0 missing)
+##       Draw_Home          < 0.5  to the left,  improve=0.5192, (0 missing)
 ##   Surrogate splits:
 ##       Goals_For_Home < 10.5 to the left,  agree=0.68, adj=0.20, (0 split)
+##       Draw_Home      < 0.5  to the left,  agree=0.64, adj=0.10, (0 split)
 ##       Goals_For_Away < 4.5  to the left,  agree=0.64, adj=0.10, (0 split)
 ##       Won_Away       < 0.5  to the right, agree=0.62, adj=0.05, (0 split)
 ## 
@@ -449,13 +466,13 @@ summary(fit_DT)
 ##   left son=8 (28 obs) right son=9 (10 obs)
 ##   Primary splits:
 ##       Goals_For_Home     < 3.5  to the right, improve=2.5290, (0 missing)
-##       Point_Home         < 4.5  to the right, improve=1.8080, (0 missing)
 ##       Goals_For_Away     < 4.5  to the right, improve=0.9521, (0 missing)
 ##       Goals_Against_Home < 1.5  to the right, improve=0.7579, (0 missing)
+##       Draw_Home          < 0.5  to the left,  improve=0.7348, (0 missing)
 ##       Won_Home           < 1.5  to the right, improve=0.3887, (0 missing)
 ##   Surrogate splits:
-##       Point_Home < 4.5  to the right, agree=0.921, adj=0.7, (0 split)
-##       Won_Home   < 1.5  to the right, agree=0.895, adj=0.6, (0 split)
+##       Won_Home  < 1.5  to the right, agree=0.895, adj=0.6, (0 split)
+##       Draw_Home < 1.5  to the left,  agree=0.789, adj=0.2, (0 split)
 ## 
 ## Node number 5: 8 observations
 ##   predicted class=1  expected loss=0.125  P(node) =0.08333
@@ -470,7 +487,7 @@ summary(fit_DT)
 ##   Primary splits:
 ##       Goals_For_Home     < 8.5  to the left,  improve=1.1460, (0 missing)
 ##       Draw_Away          < 1.5  to the left,  improve=0.7333, (0 missing)
-##       Point_Home         < 5.5  to the right, improve=0.5333, (0 missing)
+##       Draw_Home          < 0.5  to the left,  improve=0.4000, (0 missing)
 ##       Won_Away           < 1.5  to the right, improve=0.3048, (0 missing)
 ##       Goals_Against_Away < 1.5  to the left,  improve=0.2333, (0 missing)
 ## 
@@ -502,7 +519,6 @@ summary(fit_DT)
 ##       Won_Home           < 2.5  to the left,  improve=0.1905, (0 missing)
 ##   Surrogate splits:
 ##       Goals_For_Home < 6.5  to the left,  agree=0.762, adj=0.286, (0 split)
-##       Point_Home     < 4.5  to the left,  agree=0.762, adj=0.286, (0 split)
 ##       Goals_For_Away < 5.5  to the right, agree=0.762, adj=0.286, (0 split)
 ## 
 ## Node number 13: 9 observations
@@ -525,8 +541,16 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
-fit_RF <- randomForest(Result ~ Won_Home + Goals_For_Home 
-                       + Goals_Against_Home + Point_Home + Won_Away + Draw_Away 
+```
+
+```
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
+fit_RF <- randomForest(Result ~ Won_Home + Draw_Home + Goals_For_Home 
+                       + Goals_Against_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
                        importance=TRUE, ntree=100)
 prediction_RF <- predict(fit_RF, test)
@@ -570,17 +594,17 @@ kable(model_check, format = "markdown")
 ## 
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
-## |           1|             1|1             |1             |
-## |           0|             0|1             |1             |
-## |           0|             0|0             |0             |
-## |           1|             0|0             |1             |
-## |           1|             1|1             |1             |
-## |           0|             0|0             |0             |
+## |           1|             1|1             |0             |
 ## |           0|             0|1             |0             |
-## |           0|             0|0             |1             |
-## |           1|             1|0             |1             |
+## |           0|             0|0             |0             |
 ## |           1|             0|0             |1             |
-## |           1|             0|1             |0             |
+## |           1|             1|1             |0             |
+## |           0|             0|0             |1             |
+## |           0|             0|1             |1             |
+## |           0|             0|0             |1             |
+## |           1|             0|0             |1             |
+## |           1|             0|0             |0             |
+## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
@@ -604,17 +628,241 @@ lost <- xpathSApply(web_2014, "//td[@class='tbl-lost']", xmlValue)
 goal_for <- xpathSApply(web_2014, "//td[@class='tbl-goalfor']", xmlValue)
 goal_against <- xpathSApply(web_2014, "//td[@class='tbl-goalagainst']", xmlValue)
 score <- xpathSApply(web_2014, "//td[@class='tbl-pts']", xmlValue)
-result_2014 <- data.frame(Team=team_1, Played=played, Win=win, Draw=draw, 
-                          Lost=lost, Goal_for=goal_for, 
-                          Goal_against=goal_against, Score=score)
+group_2014 <- data.frame(Team=team_1, Win=win, Draw=draw, 
+                         Goal_for=goal_for, Goal_against=goal_against)
 ```
 
 ### 4.2 组合淘汰赛对阵和小组赛结果
+依照淘汰赛对阵规则，可以用先前的到的模型来预测八强赛的结果，分别是 A1 vs B2, C1 vs D2, E1 vs F2, G1 vs H2 etc.
 
+```r
+round_2_1 <- data.frame(Home=group_2014$Team[c(1,9,17,25,5,13,21,29)], 
+                      Away=group_2014$Team[c(6,14,22,30,2,10,18,26)],
+                      Result=NA)
+round_2_2 <- merge(round_2_1, group_2014, by.x="Home", by.y="Team", sort=FALSE) 
+round_2 <- merge(round_2_2, group_2014, by.x="Away", by.y="Team", sort=FALSE)
+
+final_8 <- data.frame(Home=as.character(round_2[,2]), 
+                      Away=as.character(round_2[,1]), Result=round_2[,3],
+                      Won_Home=as.numeric(as.character(round_2[,4])), 
+                      Draw_Home=as.numeric(as.character(round_2[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_2[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_2[,7])),
+                      Won_Away=as.numeric(as.character(round_2[,8])),
+                      Draw_Away=as.numeric(as.character(round_2[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_2[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_2[,11])))
+```
 
 ### 4.3 Prediction
+8强赛结果
+
+```r
+prediction_final_8 <- predict(fit_LR, final_8)
+prediction_final_8[prediction_final_8<0.5] <- 0
+prediction_final_8[prediction_final_8>=0.5] <- 1
+final_8[,"Result"] <- as.factor(prediction_final_8)
+```
+
+4强赛结果
+
+```r
+## 根据胜负结果判定哪些队伍进入4强赛，根据淘汰赛规则A1和B2的胜者对抗C1和D2的胜者
+index_1 <- NA
+for (i in 1:8){
+  if (final_8$Result[i]==1){
+    index_1[i]=1
+}
+else if (final_8$Result[i]==0){
+    index_1[i]=2
+}
+}
+
+Home <- c(as.character(final_8[1,index_1[1]]), 
+          as.character(final_8[3,index_1[3]]),
+          as.character(final_8[5,index_1[5]]),
+          as.character(final_8[7,index_1[7]]))
+
+Away <- c(as.character(final_8[2,index_1[2]]), 
+          as.character(final_8[4,index_1[4]]),
+          as.character(final_8[6,index_1[6]]),
+          as.character(final_8[8,index_1[8]]))
+
+round_3_1 <- data.frame(Home=Home, Away=Away, Result=NA)
+round_3_2 <- merge(round_3_1, group_2014, by.x="Home", by.y="Team", sort=FALSE) 
+round_3 <- merge(round_3_2, group_2014, by.x="Away", by.y="Team", sort=FALSE)
+
+final_4 <- data.frame(Home=as.character(round_3[,2]), 
+                      Away=as.character(round_3[,1]), Result=round_3[,3],
+                      Won_Home=as.numeric(as.character(round_3[,4])), 
+                      Draw_Home=as.numeric(as.character(round_3[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_3[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_3[,7])),
+                      Won_Away=as.numeric(as.character(round_3[,8])),
+                      Draw_Away=as.numeric(as.character(round_3[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_3[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_3[,11])))
 
 
+prediction_final_4 <- predict(fit_LR, final_4)
+prediction_final_4[prediction_final_4<0.5] <- 0
+prediction_final_4[prediction_final_4>=0.5] <- 1
+final_4[,"Result"] <- as.factor(prediction_final_4)
+```
+
+半决赛结果
+
+```r
+## 同理，用上面的方法计算半决赛结果
+index_2 <- NA
+for (i in 1:4){
+  if (final_4$Result[i]==1){
+    index_2[i]=1
+}
+else if (final_4$Result[i]==0){
+    index_2[i]=2
+}
+}
+
+Home <- c(as.character(final_4[1,index_2[1]]), 
+          as.character(final_4[3,index_2[3]]))
+
+Away <- c(as.character(final_4[2,index_2[2]]), 
+          as.character(final_4[4,index_2[4]]))
+
+round_4_1 <- data.frame(Home=Home, Away=Away, Result=NA)
+round_4_2 <- merge(round_4_1, group_2014, by.x="Home", by.y="Team", sort=FALSE) 
+round_4 <- merge(round_4_2, group_2014, by.x="Away", by.y="Team", sort=FALSE)
+
+semi_final <- data.frame(Home=as.character(round_4[,2]), 
+                      Away=as.character(round_4[,1]), Result=round_3[,3],
+                      Won_Home=as.numeric(as.character(round_4[,4])), 
+                      Draw_Home=as.numeric(as.character(round_4[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_4[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_4[,7])),
+                      Won_Away=as.numeric(as.character(round_4[,8])),
+                      Draw_Away=as.numeric(as.character(round_4[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_4[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_4[,11])))
+
+
+prediction_final_2 <- predict(fit_LR, semi_final)
+prediction_final_2[prediction_final_2<0.5] <- 0
+prediction_final_2[prediction_final_2>=0.5] <- 1
+semi_final[,"Result"] <- as.factor(prediction_final_2)
+```
+
+决赛！
+
+```r
+index_3 <- NA
+for (i in 1:2){
+  if (semi_final$Result[i]==1){
+    index_3[i]=1
+}
+else if (semi_final$Result[i]==0){
+    index_3[i]=2
+}
+}
+
+Home <- as.character(semi_final[1,index_3[1]])
+
+Away <- as.character(semi_final[2,index_3[2]])
+
+round_5_1 <- data.frame(Home=Home, Away=Away, Result=NA)
+round_5_2 <- merge(round_5_1, group_2014, by.x="Home", by.y="Team", sort=FALSE) 
+round_5 <- merge(round_5_2, group_2014, by.x="Away", by.y="Team", sort=FALSE)
+
+final <- data.frame(Home=as.character(round_5[,2]), 
+                      Away=as.character(round_5[,1]), Result=round_3[,3],
+                      Won_Home=as.numeric(as.character(round_5[,4])), 
+                      Draw_Home=as.numeric(as.character(round_5[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_5[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_5[,7])),
+                      Won_Away=as.numeric(as.character(round_5[,8])),
+                      Draw_Away=as.numeric(as.character(round_5[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_5[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_5[,11])))
+
+
+prediction_final_1 <- predict(fit_LR, final)
+prediction_final_1[prediction_final_1<0.5] <- 0
+prediction_final_1[prediction_final_1>=0.5] <- 1
+final[,"Result"] <- as.factor(prediction_final_1)
+```
+
+
+```r
+Round_of_16 <- as.character(group_2014$Team[c(1,6,9,14,17,22,25,30,5,2,13,10,21,18,29,26)])
+Quarter_Final <- c(as.character(final_8[1,index_1[1]]),
+                   as.character(final_8[2,index_1[2]]),
+                   as.character(final_8[3,index_1[3]]),
+                   as.character(final_8[4,index_1[4]]),
+                   as.character(final_8[5,index_1[5]]),
+                   as.character(final_8[6,index_1[6]]),
+                   as.character(final_8[7,index_1[7]]),
+                   as.character(final_8[8,index_1[8]]))
+Semi_Final <- c(as.character(final_4[1,index_2[1]]),
+                as.character(final_4[2,index_2[2]]),
+                as.character(final_4[3,index_2[3]]),
+                as.character(final_4[4,index_2[4]]))
+Final <- c(as.character(semi_final[1,index_3[1]]),
+           as.character(semi_final[2,index_3[2]]))
+```
+
+
+```r
+if (final$Result[1]==1){
+    champion=final[1,1]
+} else if (final$Result[1]==0){
+    champion=final[1,2]
+}
+
+
+Champion <- as.character(champion)
+
+Round_of_16
+```
+
+```
+##  [1] "Brazil"         "Chile"          "Colombia"       "Italy"         
+##  [5] "France"         "Iran"           "Germany"        "Korea Republic"
+##  [9] "Netherlands"    "Mexico"         "Costa Rica"     "C<U+00F4>te d'Ivoire"
+## [13] "Argentina"      "Switzerland"    "Belgium"        "USA"
+```
+
+```r
+Quarter_Final
+```
+
+```
+## [1] "Chile"         "Colombia"      "France"        "Germany"      
+## [5] "Netherlands"   "C<U+00F4>te d'Ivoire" "Switzerland"   "USA"
+```
+
+```r
+Semi_Final
+```
+
+```
+## [1] "Colombia"    "Germany"     "Netherlands" "USA"
+```
+
+```r
+Final
+```
+
+```
+## [1] "Germany"     "Netherlands"
+```
+
+```r
+Champion
+```
+
+```
+## [1] "Netherlands"
+```
 
 
 ## 5. Future Work
@@ -622,6 +870,6 @@ result_2014 <- data.frame(Team=team_1, Played=played, Win=win, Draw=draw,
 
 本预测也有很多问题需要解决：首先，training data的量严重不足，这是因为世界杯历史比赛量比较小，而且在1986年之前的比赛，因为赛制不同，包含两轮小组赛，所以不能作为training data。解决办法：可以增加欧洲杯、亚洲杯等有淘汰赛的比赛作为training。其次，Variables偏少，不多的Variables共线性严重，从足球的角度来讲，可以参考的Predictor有控球率，射门数，犯规数，传球数等等，随着科技发展，比赛中的数据也越来越全面，以后甚至可以加上球员的数据作为参考依据。这些都需要在数据采集的过程中解决。
 
-在有了一定量的数据之后，就可以采用些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率，但是足球比赛的永远是不能够确定的，正是因为它结果的扑所迷离，才造就了第一运动最为独特的魅力。
+在有了一定量的数据之后，就可以采用些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率，但是足球比赛结果在比赛结束之前是永远不能够确定的，正是因为它的戏剧性和扑所迷离，才造就了足球作为第一运动最为独特的魅力。
 
 
