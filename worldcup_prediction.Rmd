@@ -4,7 +4,7 @@
 
 *Just for fun*
 
-基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测，还有以高盛为代表的以数据分析预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测。
+基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测，还有以高盛为代表的数据分析预测。本文采用机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测。
 
 
 先上预测结果图(Jun.18)
@@ -349,7 +349,7 @@ final_8 <- data.frame(Home=as.character(round_2[,2]),
 ```
 
 ### 4.3 Prediction
-8强赛结果
+1/8决赛强赛结果
 ```{r}
 prediction_final_8 <- predict(fit_LR, final_8)
 prediction_final_8[prediction_final_8<0.5] <- 0
@@ -357,7 +357,7 @@ prediction_final_8[prediction_final_8>=0.5] <- 1
 final_8[,"Result"] <- as.factor(prediction_final_8)
 ```
 
-4强赛结果
+1/4决赛强赛结果
 ```{r}
 ## 根据胜负结果判定哪些队伍进入4强赛，根据淘汰赛规则A1和B2的胜者对抗C1和D2的胜者
 index_1 <- NA
@@ -511,7 +511,7 @@ if (final$Result[1]==1){
 Champion <- as.character(champion)
 ```
 
-淘汰赛预测结果：
+淘汰赛队伍预测：
 ```{r}
 Round_of_16
 Quarter_Final

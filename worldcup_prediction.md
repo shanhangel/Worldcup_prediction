@@ -4,7 +4,7 @@
 
 *Just for fun*
 
-基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测，还有以高盛为代表的以数据分析预测。本文采用的是机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测。
+基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测，还有以高盛为代表的数据分析预测。本文采用机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测。
 
 
 先上预测结果图(Jun.18)
@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:28:36 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,8 +382,8 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.103 0.1249
-## 3 0.01000      6    0.6154  1.051 0.1243
+## 2 0.02564      3    0.6923  1.333 0.1252
+## 3 0.01000      6    0.6154  1.282 0.1255
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -571,16 +571,16 @@ kable(model_check, format = "markdown")
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
 ## |           1|             1|1             |1             |
-## |           0|             0|1             |0             |
+## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|1             |0             |
 ## |           0|             0|0             |1             |
-## |           0|             0|1             |0             |
+## |           0|             0|1             |1             |
 ## |           0|             0|0             |1             |
+## |           1|             0|0             |1             |
 ## |           1|             0|0             |0             |
-## |           1|             0|0             |0             |
-## |           1|             0|1             |0             |
+## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
 ## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
@@ -631,7 +631,7 @@ final_8 <- data.frame(Home=as.character(round_2[,2]),
 ```
 
 ### 4.3 Prediction
-8强赛结果
+1/8决赛强赛结果
 
 ```r
 prediction_final_8 <- predict(fit_LR, final_8)
@@ -640,7 +640,7 @@ prediction_final_8[prediction_final_8>=0.5] <- 1
 final_8[,"Result"] <- as.factor(prediction_final_8)
 ```
 
-4强赛结果
+1/4决赛强赛结果
 
 ```r
 ## 根据胜负结果判定哪些队伍进入4强赛，根据淘汰赛规则A1和B2的胜者对抗C1和D2的胜者
@@ -799,7 +799,7 @@ if (final$Result[1]==1){
 Champion <- as.character(champion)
 ```
 
-淘汰赛预测结果：
+淘汰赛队伍预测：
 
 ```r
 Round_of_16
