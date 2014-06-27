@@ -7,7 +7,7 @@
 基本思路：世界杯比赛正如火如荼，各路大神开始为比赛作分析预测，预测的方法多种多样，大体上可分为以足球评论员为代表的基于足球知识预测，以章鱼哥为代表的随机性预测，还有以高盛为代表的数据分析预测。本文采用机器学习的方法，以历史世界杯数据作为training data，以淘汰赛两队比赛胜负为预测对象，小组赛表现为预测因子，构建多个模型，用上届世界杯的数据作为validation，筛选出最优模型，对本届世界杯的淘汰赛结果进行预测，灵感来自于Kaggle的March Machine Learning Mania比赛对NCAA结果的预测。
 
 
-先上预测结果图(Jun.18)
+先上预测结果图(Jun.27小组赛结束最终预测)
 
 ![final_result](final_prediction.png)
 
@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <85>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-鍏湀-18 19:38:51 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-27 10:47:37 huangshan' in 'mbcsToSbcs': dot substituted for <e5>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-27 10:47:37 huangshan' in 'mbcsToSbcs': dot substituted for <85>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-27 10:47:37 huangshan' in 'mbcsToSbcs': dot substituted for <ad>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-27 10:47:37 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-27 10:47:37 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-鍏湀-27 10:47:37 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,8 +382,8 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.333 0.1252
-## 3 0.01000      6    0.6154  1.282 0.1255
+## 2 0.02564      3    0.6923  1.103 0.1249
+## 3 0.01000      6    0.6154  1.103 0.1249
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -574,7 +574,7 @@ kable(model_check, format = "markdown")
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
-## |           1|             1|1             |0             |
+## |           1|             1|1             |1             |
 ## |           0|             0|0             |1             |
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |1             |
@@ -806,10 +806,10 @@ Round_of_16
 ```
 
 ```
-##  [1] "Brazil"         "Chile"          "Colombia"       "Italy"         
-##  [5] "France"         "Iran"           "Germany"        "Korea Republic"
-##  [9] "Netherlands"    "Mexico"         "Costa Rica"     "C<U+00F4>te d'Ivoire"
-## [13] "Argentina"      "Switzerland"    "Belgium"        "USA"
+##  [1] "Brazil"      "Chile"       "Colombia"    "Uruguay"     "France"     
+##  [6] "Nigeria"     "Germany"     "Algeria"     "Netherlands" "Mexico"     
+## [11] "Costa Rica"  "Greece"      "Argentina"   "Switzerland" "Belgium"    
+## [16] "USA"
 ```
 
 ```r
@@ -817,8 +817,8 @@ Quarter_Final
 ```
 
 ```
-## [1] "Chile"         "Colombia"      "France"        "Germany"      
-## [5] "Netherlands"   "C<U+00F4>te d'Ivoire" "Switzerland"   "USA"
+## [1] "Chile"       "Colombia"    "France"      "Germany"     "Netherlands"
+## [6] "Costa Rica"  "Switzerland" "USA"
 ```
 
 ```r
@@ -826,7 +826,7 @@ Semi_Final
 ```
 
 ```
-## [1] "Colombia"    "Germany"     "Netherlands" "USA"
+## [1] "Colombia"    "Germany"     "Netherlands" "Switzerland"
 ```
 
 ```r
