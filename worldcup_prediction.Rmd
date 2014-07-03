@@ -580,7 +580,7 @@ Semi_Final_B <- c(as.character(final_B[1,index_B[1]]),
                 as.character(final_B[4,index_B[4]]))
 ```
 
-根据八强正式名单预测的进入四强球队，看来机器还是不太看好南美双强
+根据八强正式名单预测的进入四强球队，看来模型还是不太看好南美双强
 ```{r}
 Semi_Final_B
 ```

@@ -359,12 +359,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:40:41 huangshan' in 'mbcsToSbcs': dot substituted for <e4>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:40:41 huangshan' in 'mbcsToSbcs': dot substituted for <b8>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:40:41 huangshan' in 'mbcsToSbcs': dot substituted for <83>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:40:41 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:40:41 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:40:41 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <e4>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <b8>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <83>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -381,9 +381,9 @@ summary(fit_DT)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
-## 1 0.10256      0    1.0000 1.0000 0.1234
-## 2 0.02564      3    0.6923 0.8974 0.1209
-## 3 0.01000      6    0.6154 0.9744 0.1229
+## 1 0.10256      0    1.0000  1.000 0.1234
+## 2 0.02564      3    0.6923  1.128 0.1252
+## 3 0.01000      6    0.6154  1.077 0.1246
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -576,13 +576,13 @@ kable(model_check, format = "markdown")
 ## |           1|             0|0             |0             |
 ## |           1|             1|1             |0             |
 ## |           0|             0|0             |1             |
-## |           0|             0|1             |1             |
+## |           0|             0|1             |0             |
 ## |           0|             0|0             |1             |
 ## |           1|             0|0             |1             |
 ## |           1|             0|0             |0             |
-## |           1|             0|1             |1             |
-## |           1|             0|0             |1             |
-## |           1|             1|0             |0             |
+## |           1|             0|1             |0             |
+## |           1|             0|0             |0             |
+## |           1|             1|0             |1             |
 ## |           1|             1|1             |1             |
 ## |           0|             1|1             |1             |
 ## |           0|             0|0             |0             |
@@ -906,7 +906,7 @@ Semi_Final_B <- c(as.character(final_B[1,index_B[1]]),
                 as.character(final_B[4,index_B[4]]))
 ```
 
-根据八强正式名单预测的进入四强球队，看来机器还是不太看好南美双强
+根据八强正式名单预测的进入四强球队，看来模型还是不太看好南美双强
 
 ```r
 Semi_Final_B
