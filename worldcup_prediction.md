@@ -360,12 +360,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:40:12 huangshan' in 'mbcsToSbcs': dot substituted for <e4>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:40:12 huangshan' in 'mbcsToSbcs': dot substituted for <b8>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:40:12 huangshan' in 'mbcsToSbcs': dot substituted for <83>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:40:12 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:40:12 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:40:12 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:44:38 huangshan' in 'mbcsToSbcs': dot substituted for <e4>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:44:38 huangshan' in 'mbcsToSbcs': dot substituted for <b8>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:44:38 huangshan' in 'mbcsToSbcs': dot substituted for <83>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:44:38 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:44:38 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:44:38 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,9 +382,9 @@ summary(fit_DT)
 ##   n= 96 
 ## 
 ##        CP nsplit rel error xerror   xstd
-## 1 0.10256      0    1.0000 1.0000 0.1234
-## 2 0.02564      3    0.6923 1.0769 0.1246
-## 3 0.01000      6    0.6154 0.9231 0.1216
+## 1 0.10256      0    1.0000  1.000 0.1234
+## 2 0.02564      3    0.6923  1.128 0.1252
+## 3 0.01000      6    0.6154  1.128 0.1252
 ## 
 ## Variable importance
 ##     Goals_For_Home     Goals_For_Away Goals_Against_Away 
@@ -572,14 +572,14 @@ kable(model_check, format = "markdown")
 ## | test.Result| prediction_LR|prediction_DT |prediction_RF |
 ## |-----------:|-------------:|:-------------|:-------------|
 ## |           1|             1|1             |0             |
-## |           0|             0|1             |0             |
+## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
-## |           1|             1|1             |0             |
+## |           1|             1|1             |1             |
 ## |           0|             0|0             |1             |
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |1             |
-## |           1|             0|0             |1             |
+## |           1|             0|0             |0             |
 ## |           1|             0|0             |0             |
 ## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
@@ -855,10 +855,57 @@ Champion
 在有了一定量的数据之后，就可以采用一些比较复杂的模型，SVM或者ANN都是作为分类预测很好的选择。总之，丰富的数据量和先进模型的加入可以提升预测的正确率。但是所谓足球是圆的，比赛结果在结束之前是永远不能够确定的，正是因为它的戏剧性和不可预测性，才造就了足球作为第一运动最为独特的魅力。放平心态，欣赏足球才是正经事。
 
 
-## PS
+### *PS*
 8场1/8决赛有两场比赛预测错误，分别是巴西vs.智利和阿根廷vs.瑞士，预测正确率为75%。但是从比赛过程上来看，两场分别通过点球决胜和加时绝杀获得的胜利，可以看出两队实力还是比较接近。因为比赛对手发生变化，需要对其中两场1/4决赛再次做预测。(Jul.3)
 
 
+```r
+Home <- c(as.character(final_8[1,1]), 
+          as.character(final_8[3,index_1[3]]),
+          as.character(final_8[5,index_1[5]]),
+          as.character(final_8[7,1]))
+
+Away <- c(as.character(final_8[2,index_1[2]]), 
+          as.character(final_8[4,index_1[4]]),
+          as.character(final_8[6,index_1[6]]),
+          as.character(final_8[8,1]))
+
+round_B_1 <- data.frame(Home=Home, Away=Away, Result=NA)
+round_B_2 <- merge(round_B_1, group_2014, by.x="Home", by.y="Team", sort=FALSE) 
+round_B <- merge(round_B_2, group_2014, by.x="Away", by.y="Team", sort=FALSE)
+
+final_B <- data.frame(Home=as.character(round_B[,2]), 
+                      Away=as.character(round_B[,1]), Result=round_B[,3],
+                      Won_Home=as.numeric(as.character(round_B[,4])), 
+                      Draw_Home=as.numeric(as.character(round_B[,5])), 
+                      Goals_For_Home=as.numeric(as.character(round_B[,6])), 
+                      Goals_Against_Home=as.numeric(as.character(round_B[,7])),
+                      Won_Away=as.numeric(as.character(round_B[,8])),
+                      Draw_Away=as.numeric(as.character(round_B[,9])), 
+                      Goals_For_Away=as.numeric(as.character(round_B[,10])), 
+                      Goals_Against_Away=as.numeric(as.character(round_B[,11])))
+
+
+prediction_final_B <- predict(fit_LR, final_B)
+prediction_final_B[prediction_final_B<0.5] <- 0
+prediction_final_B[prediction_final_B>=0.5] <- 1
+final_B[,"Result"] <- as.factor(prediction_final_B)
+
+index_B <- NA
+for (i in 1:4){
+  if (final_B$Result[i]==1){
+    index_B[i]=1
+}
+else if (final_B$Result[i]==0){
+    index_B[i]=2
+}
+}
+
+Semi_Final_B <- c(as.character(final_B[1,index_B[1]]),
+                as.character(final_B[2,index_B[2]]),
+                as.character(final_B[3,index_B[3]]),
+                as.character(final_B[4,index_B[4]]))
+```
 
 根据八强正式名单预测的进入四强球队，看来模型还是不太看好南美双强
 
