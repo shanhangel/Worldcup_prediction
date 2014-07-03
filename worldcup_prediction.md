@@ -13,7 +13,8 @@
 
 
 ## 1. Getting the data
-数据来源为FIFA官网，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、以及积分信息，再结合淘汰赛的胜负结果，生成表格
+数据来源为[FIFA官网][1]，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、以及积分信息，再结合淘汰赛的胜负结果，生成表格
+[1]:http://www.fifa.com/worldfootball/statisticsandrecords/tournaments/worldcup/organisation/    "FIFA官网"
 
 ![fifa_web](fifa_web截图.png)
 
@@ -343,7 +344,23 @@ summary(fit_LR)
 
 ```r
 library(rattle)
+```
+
+```
+## Rattle: A free graphical interface for data mining with R.
+## Version 3.0.2 r169 Copyright (c) 2006-2013 Togaware Pty Ltd.
+## Type 'rattle()' to shake, rattle, and roll your data.
+```
+
+```r
 library(rpart.plot)
+```
+
+```
+## Loading required package: rpart
+```
+
+```r
 library(RColorBrewer)
 library(rpart)
 
@@ -359,12 +376,12 @@ fancyRpartPlot(fit_DT)
 ```
 
 ```
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <e4>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <b8>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <83>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
-## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 15:54:21 huangshan' in 'mbcsToSbcs': dot substituted for <88>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:35:23 huangshan' in 'mbcsToSbcs': dot substituted for <e4>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:35:23 huangshan' in 'mbcsToSbcs': dot substituted for <b8>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:35:23 huangshan' in 'mbcsToSbcs': dot substituted for <83>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:35:23 huangshan' in 'mbcsToSbcs': dot substituted for <e6>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:35:23 huangshan' in 'mbcsToSbcs': dot substituted for <9c>
+## Warning: conversion failure on 'Rattle 2014-涓冩湀-03 16:35:23 huangshan' in 'mbcsToSbcs': dot substituted for <88>
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
@@ -382,7 +399,7 @@ summary(fit_DT)
 ## 
 ##        CP nsplit rel error xerror   xstd
 ## 1 0.10256      0    1.0000  1.000 0.1234
-## 2 0.02564      3    0.6923  1.128 0.1252
+## 2 0.02564      3    0.6923  1.051 0.1243
 ## 3 0.01000      6    0.6154  1.077 0.1246
 ## 
 ## Variable importance
@@ -525,6 +542,14 @@ summary(fit_DT)
 
 ```r
 library(randomForest)
+```
+
+```
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
 fit_RF <- randomForest(Result ~ Won_Home + Draw_Home + Goals_For_Home 
                        + Goals_Against_Home + Won_Away + Draw_Away 
                        + Goals_For_Away + Goals_Against_Away, data=train_data, 
@@ -574,15 +599,15 @@ kable(model_check, format = "markdown")
 ## |           0|             0|1             |1             |
 ## |           0|             0|0             |0             |
 ## |           1|             0|0             |0             |
-## |           1|             1|1             |0             |
+## |           1|             1|1             |1             |
 ## |           0|             0|0             |1             |
-## |           0|             0|1             |0             |
+## |           0|             0|1             |1             |
 ## |           0|             0|0             |1             |
 ## |           1|             0|0             |1             |
 ## |           1|             0|0             |0             |
-## |           1|             0|1             |0             |
+## |           1|             0|1             |1             |
 ## |           1|             0|0             |0             |
-## |           1|             1|0             |1             |
+## |           1|             1|0             |0             |
 ## |           1|             1|1             |1             |
 ## |           0|             1|1             |1             |
 ## |           0|             0|0             |0             |

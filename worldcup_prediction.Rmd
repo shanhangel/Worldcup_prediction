@@ -13,7 +13,8 @@
 
 
 ## 1. Getting the data
-数据来源为FIFA官网，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、以及积分信息，再结合淘汰赛的胜负结果，生成表格
+数据来源为[FIFA官网][1]，抓取1966-2010共十一届世界杯的历史数据网页，通过解析html文件，获得包含小组赛胜场数、负场数、平局数、进球数、被进球数、以及积分信息，再结合淘汰赛的胜负结果，生成表格
+[1]:http://www.fifa.com/worldfootball/statisticsandrecords/tournaments/worldcup/organisation/    "FIFA官网"
 
 ![fifa_web](fifa_web截图.png)
 
